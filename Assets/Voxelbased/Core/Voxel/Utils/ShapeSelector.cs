@@ -6,9 +6,6 @@ namespace VoxelbasedCom
 {
     public class ShapeSelector
     {
-        /// <summary>
-        /// Turn a shape enum into a density function
-        /// </summary>
         public Density GetShapeDensity(Shape shapeType, Vector3 centerPoint, float radius)
         {
             Density density;

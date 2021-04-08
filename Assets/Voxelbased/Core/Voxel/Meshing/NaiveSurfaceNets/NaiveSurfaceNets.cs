@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Unity.Jobs;
 using UnityEngine;
 
 namespace VoxelbasedCom
@@ -54,7 +55,7 @@ namespace VoxelbasedCom
 		{
 		}
 
-		public override MeshData GenerateMeshData()
+		public override bool GetMeshData(out MeshData meshData)
 		{
 			GenerateCubeEdgesTable();
 			GenerateIntersectionTable();
@@ -63,12 +64,13 @@ namespace VoxelbasedCom
 
 			List<Vector3> normals = NormalSolver.RecalculateNormals(triangles, newVertices, NormalSmoothing);
 
-			return new MeshData
+			meshData = new MeshData
 			{
-				vertices = newVertices,
-				triangles = triangles,
+				//vertices = newVertices,
+				//triangles = triangles,
 				normals = normals
 			};
+            return true;
 		}
 
 		void GenerateIntersectionTable()
@@ -308,5 +310,10 @@ namespace VoxelbasedCom
 				}
 			}
 		}
-	}
+
+        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

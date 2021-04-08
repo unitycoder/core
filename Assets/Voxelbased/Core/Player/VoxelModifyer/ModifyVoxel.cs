@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,21 +6,18 @@ namespace VoxelbasedCom
 {
     public class ModifyVoxel : MonoBehaviour
     {
-        public GameObject voxel;
+        public Voxelbased voxelbased;
         public Camera cam;
         public Shape shape;
-        [Range(1, 10)]
-        public int size = 3;
+        public float size = 3.0f;
 
-        private Dictionary<Vector3, ModifyVertex> modifyVertex;
-        private Voxelbased vb;
+        private List<Chunk> chunks;
 
         private void Start()
         {
-            vb = voxel.GetComponent<Voxelbased>();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            modifyVertex = new Dictionary<Vector3, ModifyVertex>();
+            chunks = new List<Chunk>();
         }
 
         private void Update()
@@ -44,7 +41,15 @@ namespace VoxelbasedCom
             {
                 if (hitInfo.transform.tag == "Ground")
                 {
-                    UpdateVoxel(hitInfo, hitInfo.point, "Add", shape, size, true);
+
+                    Chunk c = hitInfo.transform.gameObject.GetComponent<Chunk>();
+                  
+                    if (c != null && !chunks.Contains(c))
+                    {
+                        chunks.Add(c);
+                    }
+
+                    //voxelbased.UpdateVoxel(hitInfo, hitInfo.point, chunks, "Add", shape, size, true);
                 }
             }
         }
@@ -59,41 +64,14 @@ namespace VoxelbasedCom
                 //Debug.DrawLine(ray.origin, ray.origin + (ray.direction * hit.distance), Color.green, 2);
                 if (hitInfo.transform.tag == "Ground")
                 {
-                    UpdateVoxel(hitInfo, hitInfo.point, "Remove", shape, size, true);
+                    Chunk c = hitInfo.transform.gameObject.GetComponent<Chunk>();
+                    if (c != null && !chunks.Contains(c))
+                    {
+                        chunks.Add(c);
+                    }
+                    //voxelbased.UpdateVoxel(hitInfo, hitInfo.point, chunks, "Remove", shape, size, true);
                 }
             }
-        }
-
-        public void UpdateVoxel(RaycastHit hit, Vector3 hitPos, string progressType, Shape shapeType, float shapeSize, bool finish)
-        {
-            Vector3 pos = Vector3.zero;
-
-            if (progressType == "Add")
-            {
-                pos.x = Mathf.CeilToInt(hitPos.x);
-                pos.y = Mathf.CeilToInt(hitPos.y);
-                pos.z = Mathf.CeilToInt(hitPos.z);
-            }
-            else if (progressType == "Remove")
-            {
-                pos.x = Mathf.FloorToInt(hitPos.x);
-                pos.y = Mathf.FloorToInt(hitPos.y);
-                pos.z = Mathf.FloorToInt(hitPos.z);
-            }
-
-            if (!modifyVertex.ContainsKey(pos))
-            {
-                modifyVertex.Add(pos, new ModifyVertex(pos, progressType, shapeType, shapeSize));
-            }
-
-            foreach (Transform child in voxel.transform)
-            {
-                Chunk chunk = child.GetComponent<Chunk>();
-
-                var isosurface = new Isosurface(vb.shapeSelector, vb.density, vb.isosurfaceAlgorithm, modifyVertex);
-                chunk.CreateChunk(isosurface, vb.chunkSize);
-            }
-
         }
     }
 }

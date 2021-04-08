@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Jobs;
 using UnityEngine;
 
 namespace VoxelbasedCom
@@ -15,7 +16,7 @@ namespace VoxelbasedCom
 		{
 		}
 
-		public override MeshData GenerateMeshData()
+		public override bool GetMeshData(out MeshData meshData)
 		{
 			vertices = new List<Vector3>();
 			normals = new List<Vector3>();
@@ -23,15 +24,21 @@ namespace VoxelbasedCom
 
 			 CreateBlocks();
 
-			return new MeshData
+			meshData = new MeshData
 			{
-				vertices = vertices,
+				//vertices = vertices,
 				normals = normals,
-				triangles = triangles
+				//triangles = triangles
 			};
+            return true;
 		}
 
-		private void CreateBlocks()
+        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CreateBlocks()
 		{
 			for (int x = 0; x < chunkSize; x++)
 			{

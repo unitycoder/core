@@ -1,70 +1,112 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Mathematics;
 
 namespace VoxelbasedCom
 {
-    /// <summary>
-    /// Actual class to get the density
-    /// </summary>
-    public class Isosurface
+    public class Isosurface : IDisposable
     {
-        public ShapeSelector shapeSelector;
-        public Density density;
         public IsosurfaceAlgorithm isosurfaceAlgorithm;
-        private Dictionary<Vector3, ModifyVertex> modifiers;
+        private Dictionary<Vector3, ModifyVertex> modifyVertex;
 
-        public Isosurface(ShapeSelector shapeSelector, Density density, IsosurfaceAlgorithm algorithm, Dictionary<Vector3, ModifyVertex> modifiers)
+        public JobHandle densityHandle;
+        public NativeArray<float> densityField;
+
+        DensityProperties densityProperties;
+
+        public Isosurface(IsosurfaceAlgorithm algorithm, Dictionary<Vector3, ModifyVertex> modifyVertex, bool preGenerate, int chunkSize, int3 chunkPos, DensityProperties densityProperties)
         {
             this.isosurfaceAlgorithm = algorithm;
-            this.density = density;
-            this.modifiers = modifiers;
-            this.shapeSelector = shapeSelector;
-        }
-        /// <summary>
-        /// Getting the density, modified by shapes
-        /// </summary>
-        public virtual float GetDensity(float x, float y, float z)
-        {
-            float baseDensity = density.GetDensity(x, y, z);
-            //Modify the density
-            foreach (ModifyVertex modification in modifiers.Values)
+            this.modifyVertex = modifyVertex;
+            this.densityProperties = densityProperties;
+
+            if (preGenerate)
             {
-                //float modificationDensity = modification.density.GetDensity(modification.position.x, modification.position.y, modification.position.z);
+                int chunkSizeWithBorder = chunkSize + densityProperties.borderSize;
+                densityField = new NativeArray<float>(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, Allocator.Persistent);
 
-                //switch (modification.operationType)
-                //{
-                //    case OperationType.Union:
-                //        baseDensity = Mathf.Min(baseDensity, modificationDensity);
-                //        break;
-                //    case OperationType.Subtraction:
-                //        baseDensity = Mathf.Max(baseDensity, -modificationDensity);
-                //        break;
-                //    case OperationType.Intersection:
-                //        baseDensity = Mathf.Max(baseDensity, modificationDensity);
-                //        break;
-                //    default:
-                //        break;
-                //}
+                var densityJob = new DensityJob()
+                {
+                    chunkOffset = chunkPos,
+                    chunkSize = chunkSizeWithBorder,
+                    densityField = densityField,
+                    shape = densityProperties.shape,
+                    shapeCenter = densityProperties.centerPoint,
+                    shapeRadius = densityProperties.shapeRadius,
+                };
+                densityHandle = densityJob.Schedule(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, 64);
+            }
+        }
 
-                Density d = shapeSelector.GetShapeDensity(modification.shapeType, modification.position, modification.shapeSize);
+        public JobHandle ScheduleDensityModification(Shape shape, float3 modificationCenter, float modificationRadius, DensityOperationType operationType, int chunkSize, int3 chunkPos)
+        {
+            if (!densityField.IsCreated) return default;
 
-                float shapeDensity = d.GetDensity(x, y, z);
+            int chunkSizeWithBorder = chunkSize + densityProperties.borderSize;
 
-                if (modification.processType == "Add")
+            var densityJob = new DensityJob()
+            {
+                chunkOffset = chunkPos,
+                chunkSize = chunkSizeWithBorder,
+                densityField = densityField,
+                shape = shape,
+                shapeCenter = modificationCenter,
+                shapeRadius = modificationRadius,
+                operationType = operationType
+            };
+            densityHandle = densityJob.Schedule(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, 64);
+            return densityHandle;
+        }
+
+        public JobHandle ScheduleDensityUpdate(int chunkSize, int3 chunkPos)
+        {
+            if (!densityField.IsCreated) return default;
+
+            int chunkSizeWithBorder = chunkSize + densityProperties.borderSize;
+
+            var densityJob = new DensityJob()
+            {
+                chunkOffset = chunkPos,
+                chunkSize = chunkSizeWithBorder,
+                densityField = densityField,
+                shape = densityProperties.shape,
+                shapeCenter = densityProperties.centerPoint,
+                shapeRadius = densityProperties.shapeRadius,
+                time = Time.time * 2,
+                simType = densityProperties.simulationType
+            };
+            densityHandle = densityJob.Schedule(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, 64);
+            return densityHandle;
+        }
+
+        public virtual float GetDensity(float x, float y, float z, int chunkSize)
+        {
+            float baseDensity = densityField[CoordinateConversion.Flatten((int)x, (int)y, (int)z, chunkSize)];
+
+            foreach (ModifyVertex item in modifyVertex.Values)
+            {
+                //Density d = shapeSelector.GetShapeDensity(item.shapeType, item.position, item.shapeSize);
+
+                //float shapeDensity = d.GetDensity(x, y, z);
+
+               /*if (item.processType == "Add")
                 {
                     if (shapeDensity < baseDensity)
                         baseDensity = shapeDensity;
                 }
-                else if (modification.processType == "Remove")
+                else if(item.processType == "Remove")
                 {
                     if (-shapeDensity > baseDensity)
                         baseDensity = -shapeDensity;
-                }
+                }*/
+
             }
             return baseDensity;
         }
-        public virtual float GetDensity(Vector3 p) { return GetDensity(p.x, p.y, p.z); }
+
         public MeshBuilder GetMeshBuilder(Vector3 offset, int chunkSize)
         {
             switch (isosurfaceAlgorithm)
@@ -72,7 +114,7 @@ namespace VoxelbasedCom
                 case IsosurfaceAlgorithm.Boxel:
                     return new Boxel(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.MarchingCubes:
-                    return new MarchingCubes(this, offset, chunkSize);
+                    return new MarchingCubes.MarchingCubes(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.MarchingTetrahedra:
                     return new MarchingTetrahedra(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.NaiveSurfaceNets:
@@ -84,6 +126,12 @@ namespace VoxelbasedCom
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public void Dispose()
+        {
+            densityHandle.Complete();
+            densityField.Dispose();
         }
     }
 
@@ -98,5 +146,14 @@ namespace VoxelbasedCom
         NaiveSurfaceNets,
         DualContouring,
         CubicalMarchingSquares
+    }
+    //Temp
+    public class DensityProperties
+    {
+        public int borderSize;
+        public Shape shape;
+        public float3 centerPoint;
+        public float shapeRadius;
+        public SimulationType simulationType;
     }
 }

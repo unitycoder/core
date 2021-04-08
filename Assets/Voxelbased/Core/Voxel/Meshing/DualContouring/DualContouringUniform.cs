@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Unity.Jobs;
 using UnityEngine;
 
 namespace VoxelbasedCom
@@ -34,7 +35,7 @@ namespace VoxelbasedCom
             triangles = new List<int>();
         }
 
-        public override MeshData GenerateMeshData()
+        public override bool GetMeshData(out MeshData meshData)
         {
             Row.size = chunkSize + 3;
             verticesCount = 0;
@@ -69,12 +70,13 @@ namespace VoxelbasedCom
 
             List<Vector3> normals = NormalSolver.RecalculateNormals(triangles, vertices, 90);
 
-            return new MeshData
+            meshData = new MeshData
             {
-                vertices = vertices,
+                //vertices = vertices,
                 normals = normals,
-                triangles = triangles
+                //triangles = triangles
             };
+            return true;
         }
 
         /// <summary>
@@ -518,6 +520,11 @@ namespace VoxelbasedCom
 
             //return new Vector3(x, y, zm);
             pOut = new Vector3(x, y, zm);
+        }
+
+        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        {
+            throw new NotImplementedException();
         }
     }
 }
