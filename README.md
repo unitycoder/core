@@ -12,12 +12,13 @@
 Join the conversation and help the community.
 
 - [Discord][discord]
+- [Trello][trello]
 - [Twitter][twitter]
 - [Website][website]
 
 ## Usage
 <ol>
-    <li>Unity Engine version: 2020.3.1f1</li>
+    <li>Unity Engine version: 2020.3.2f1</li>
     <li>
         Packages:
         <ul>
@@ -33,9 +34,9 @@ Join the conversation and help the community.
 
 MIT
 
-
 **Love Voxel based? Give our repo a star :star: :arrow_up:.**
 
-[twitter]: https://twitter.com/voxelbasedcom
 [discord]: https://discord.com/invite/aegudcbYhr
+[trello]: https://trello.com/b/PNrqXXN0/voxel-based
+[twitter]: https://twitter.com/voxelbasedcom
 [website]: http://voxelbased.com

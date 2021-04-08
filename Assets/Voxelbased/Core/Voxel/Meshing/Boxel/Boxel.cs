@@ -141,16 +141,16 @@ namespace VoxelbasedCom
 							}
 
 							// create triangles
-							int tl = vertices.Count - 4 * faceCount;
+							int triangle = vertices.Count - 4 * faceCount;
 							for (int i = 0; i < faceCount; i++)
 							{
 								triangles.AddRange(new int[] {
-									tl + i * 4,
-									tl + i * 4 + 1,
-									tl + i * 4 + 2,
-									tl + i * 4,
-									tl + i * 4 + 2,
-									tl + i * 4 + 3
+									triangle + i * 4,
+									triangle + i * 4 + 1,
+									triangle + i * 4 + 2,
+									triangle + i * 4,
+									triangle + i * 4 + 2,
+									triangle + i * 4 + 3
 								});
 							}
 						}
