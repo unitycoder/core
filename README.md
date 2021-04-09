@@ -16,7 +16,7 @@ Join the conversation and help the community.
 - [Twitter][twitter]
 - [Website][website]
 
-## 🔭Follow our progress
+## 🔭 Follow our progress
 
 <p align="center"><a href="https://trello.com/b/PNrqXXN0/voxel-based">Follow our progress on  Trello</a></p> 
 
