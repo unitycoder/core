@@ -17,9 +17,9 @@ namespace VoxelbasedCom
 
         private void Start()
         {
-            vb = voxel.GetComponent<Voxelbased>();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            vb = voxel.GetComponent<Voxelbased>();
             modifyVertex = new Dictionary<Vector3, ModifyVertex>();
         }
 

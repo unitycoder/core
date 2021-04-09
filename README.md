@@ -8,6 +8,8 @@
   <br>
 </p>
 
+![Voxel based preview](https://raw.githubusercontent.com/voxelbased/core/master/images/preview.gif)
+
 ## :statue_of_liberty: Community
 
 Join the conversation and help the community.

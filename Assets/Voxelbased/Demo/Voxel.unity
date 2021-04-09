@@ -364,7 +364,7 @@ MonoBehaviour:
   chunkPrefab: {fileID: 2985511964130480932, guid: 456a693c501e91748878a18bc055ee80, type: 3}
   chunkSize: 16
   isosurfaceAlgorithm: 5
-  shape: 1
+  shape: 9
   drawGizmo: 1
 --- !u!4 &1153055731
 Transform:
