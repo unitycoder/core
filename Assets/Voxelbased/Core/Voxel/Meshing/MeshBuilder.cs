@@ -16,6 +16,7 @@ namespace VoxelbasedCom
 
         protected readonly Vector3 offset;
         protected Triangle triangle = new Triangle();
+
         protected MeshBuilder(Isosurface isosurface, Vector3 offset, int chunkSize)
         {
             this.isosurface = isosurface;
@@ -24,18 +25,42 @@ namespace VoxelbasedCom
 
         }
 
-        public abstract bool GetMeshData(out MeshData meshData);
+        //public abstract bool GetMeshData(out MeshData meshData);
         //change to abstract when all meshing options can support this
         public JobHandle ScheduleMeshJob(bool regenerateDensity = false)
         {
-            return OnMeshJobScheduled(regenerateDensity ? ScheduleDensityJob() : default);
+            if (meshData == null) return default;
+            meshData.counter.Count = 0;
+
+            return StartMeshJob(regenerateDensity ? ScheduleDensityJob() : default);
         }
         public JobHandle ScheduleMeshJob(JobHandle inputDeps)
         {
-            return OnMeshJobScheduled(inputDeps);
+            if (meshData == null) return default;
+            meshData.counter.Count = 0;
+
+            return StartMeshJob(inputDeps);
         }
 
-        protected abstract JobHandle OnMeshJobScheduled(JobHandle inputDeps = default);
+        protected abstract JobHandle StartMeshJob(JobHandle inputDeps = default);
+
+        public bool TryGetMeshData(out MeshData meshData)
+        {
+            if (this.meshData == null) throw new Exception("MeshData not initialized! Should Initialize in the constructor of MeshBuilder derived class");
+            if (meshingHandle.IsCompleted)
+            {
+                meshingHandle.Complete();
+                meshData = this.meshData;
+                //Temporary, should calculate normals in a job
+                //meshData.normals = NormalSolver.RecalculateNormals(meshData.triangles.ToArray(), meshData.vertices.ToArray(), NormalSmoothing, meshData.counter.Count);
+                return true;
+            }
+            else
+            {
+                meshData = null;
+                return false;
+            }
+        }
 
         /// <summary>
         /// Get density for point in world

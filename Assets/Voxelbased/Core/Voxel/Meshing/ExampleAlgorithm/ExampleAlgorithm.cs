@@ -17,7 +17,7 @@ namespace VoxelbasedCom
 		{
 		}
 
-		public override bool GetMeshData(out MeshData meshData)
+		/*public override bool GetMeshData(out MeshData meshData)
 		{
 			vertices = new List<Vector3>();
 			normals = new List<Vector3>();
@@ -35,9 +35,9 @@ namespace VoxelbasedCom
 				//triangles = triangles
 			};
             return true;
-		}
+		}*/
 
-        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        protected override JobHandle StartMeshJob(JobHandle inputDeps = default)
         {
             throw new System.NotImplementedException();
         }

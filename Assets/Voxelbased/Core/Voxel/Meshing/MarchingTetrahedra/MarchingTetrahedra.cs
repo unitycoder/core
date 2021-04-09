@@ -36,7 +36,7 @@ namespace VoxelbasedCom
 		{
 		}
 
-		public override bool GetMeshData(out MeshData meshData)
+		/*public override bool GetMeshData(out MeshData meshData)
 		{
 
 			float[] value = CalculateDensities();
@@ -73,7 +73,7 @@ namespace VoxelbasedCom
 				normals = normals
 			};
             return true;
-		}
+		}*/
 
 		int interp(int i0, int i1)
 		{
@@ -214,7 +214,7 @@ namespace VoxelbasedCom
 			}
 		}
 
-        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        protected override JobHandle StartMeshJob(JobHandle inputDeps = default)
         {
             throw new System.NotImplementedException();
         }

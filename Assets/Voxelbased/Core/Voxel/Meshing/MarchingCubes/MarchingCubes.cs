@@ -2,6 +2,7 @@
 using UnityEngine;
 using Unity.Jobs;
 using Unity.Collections;
+using Unity.Mathematics;
 
 namespace VoxelbasedCom.MarchingCubes
 {
@@ -16,7 +17,7 @@ namespace VoxelbasedCom.MarchingCubes
             CompleteDensityJob();
             meshData = new MeshData()
             {
-                vertices = new NativeArray<Vector3>(chunkSize * chunkSize * chunkSize * 5 * 3, Allocator.Persistent, NativeArrayOptions.UninitializedMemory),
+                vertices = new NativeArray<float3>(chunkSize * chunkSize * chunkSize * 5 * 3, Allocator.Persistent, NativeArrayOptions.UninitializedMemory),
                 triangles = new NativeArray<int>(chunkSize * chunkSize * chunkSize * 5 * 3, Allocator.Persistent, NativeArrayOptions.UninitializedMemory),
                 counter = new Counter(Allocator.Persistent)
 
@@ -26,10 +27,9 @@ namespace VoxelbasedCom.MarchingCubes
             ScheduleMeshJob();
         }
 
-        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        protected override JobHandle StartMeshJob(JobHandle inputDeps = default)
         {
-            if (meshData == null) return default;
-            meshData.counter.Count = 0;
+            
 
             var marchingCubesJob = new MarchingCubesJob()
             {
@@ -44,21 +44,6 @@ namespace VoxelbasedCom.MarchingCubes
             return meshingHandle;
         }
 
-        public override bool GetMeshData(out MeshData meshData)
-        {
-            if (meshingHandle.IsCompleted)
-            {
-                meshingHandle.Complete();
-                meshData = this.meshData;
-                //Temporary, should calculate normals in a job
-                //meshData.normals = NormalSolver.RecalculateNormals(meshData.triangles.ToArray(), meshData.vertices.ToArray(), NormalSmoothing, meshData.counter.Count);
-                return true;
-            }
-            else
-            {
-                meshData = null;
-                return false;
-            }
-        }
+        
     }
 }

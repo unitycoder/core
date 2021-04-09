@@ -24,12 +24,18 @@ namespace VoxelbasedCom
         private Density density;
         private Queue<Chunk> chunksToGenerate;
 
+        readonly Dictionary<IsosurfaceAlgorithm, int> borderSizes = new Dictionary<IsosurfaceAlgorithm, int>()
+        {
+            { IsosurfaceAlgorithm.MarchingCubes, 1 },
+            { IsosurfaceAlgorithm.Boxel, 2 }
+        };
+
         void Awake()
         {
             chunksToGenerate = new Queue<Chunk>();
 
             radius = chunkSize * 2;
-            centerPoint = radius / 4f;
+            centerPoint = radius / 2f;
             shapeSelector = new ShapeSelector();
 
             density = shapeSelector.GetShapeDensity(shape, transform.position + new Vector3(centerPoint, centerPoint, centerPoint), centerPoint);
@@ -98,7 +104,7 @@ namespace VoxelbasedCom
 
                 var isosurface = new Isosurface(isosurfaceAlgorithm, new Dictionary<Vector3, ModifyVertex>(), true, chunk.chunkSize, chunk.chunkPos, new DensityProperties()
                 {
-                    borderSize = 1,
+                    borderSize = borderSizes[isosurfaceAlgorithm],
                     centerPoint = centerPoint,
                     shape = shape,
                     shapeRadius = centerPoint,
@@ -125,4 +131,5 @@ namespace VoxelbasedCom
             }
         }
     }
+
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Unity.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace VoxelbasedCom
@@ -11,14 +12,17 @@ namespace VoxelbasedCom
     public class MeshData : IDisposable
     {
         public NativeArray<int> triangles;
-        public NativeArray<Vector3> vertices;
+        public NativeArray<float3> vertices;
+        public NativeArray<float3> normals;
+
         public Counter counter;
-        public List<Vector3> normals;
 
         public void Dispose()
         {
             triangles.Dispose();
             vertices.Dispose();
+            if(normals.IsCreated)
+                normals.Dispose();
             counter.Dispose();
         }
     }

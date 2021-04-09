@@ -37,7 +37,7 @@ namespace VoxelbasedCom.MarchingCubes
         /// <summary>
         /// The generated vertices
         /// </summary>
-        [NativeDisableParallelForRestriction, WriteOnly] public NativeArray<Vector3> vertices;
+        [NativeDisableParallelForRestriction, WriteOnly] public NativeArray<float3> vertices;
 
         /// <summary>
         /// The generated triangles

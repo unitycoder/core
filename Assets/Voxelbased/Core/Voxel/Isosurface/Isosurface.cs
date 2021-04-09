@@ -112,7 +112,7 @@ namespace VoxelbasedCom
             switch (isosurfaceAlgorithm)
             {
                 case IsosurfaceAlgorithm.Boxel:
-                    return new Boxel(this, offset, chunkSize);
+                    return new Boxel.Boxel(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.MarchingCubes:
                     return new MarchingCubes.MarchingCubes(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.MarchingTetrahedra:

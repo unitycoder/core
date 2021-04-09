@@ -55,7 +55,7 @@ namespace VoxelbasedCom
 		{
 		}
 
-		public override bool GetMeshData(out MeshData meshData)
+		/*public override bool GetMeshData(out MeshData meshData)
 		{
 			GenerateCubeEdgesTable();
 			GenerateIntersectionTable();
@@ -71,7 +71,7 @@ namespace VoxelbasedCom
 				normals = normals
 			};
             return true;
-		}
+		}*/
 
 		void GenerateIntersectionTable()
 		{
@@ -311,7 +311,7 @@ namespace VoxelbasedCom
 			}
 		}
 
-        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        protected override JobHandle StartMeshJob(JobHandle inputDeps = default)
         {
             throw new NotImplementedException();
         }

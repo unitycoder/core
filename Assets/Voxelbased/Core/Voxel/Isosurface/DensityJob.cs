@@ -39,7 +39,6 @@ namespace VoxelbasedCom
             float3 localPos = CoordinateConversion.Expand(index, chunkSize);
 
             float value = DemoShapes.GetDensity(shape, localPos + chunkOffset, shapeRadius, shapeCenter);
-            
 
             if(simType == SimulationType.Expand)
                 value += math.sin(time);

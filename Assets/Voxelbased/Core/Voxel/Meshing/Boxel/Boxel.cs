@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.Jobs;
+using Unity.Mathematics;
 using UnityEngine;
 
-namespace VoxelbasedCom
+namespace VoxelbasedCom.Boxel
 {
 	public class Boxel : MeshBuilder
 	{
@@ -14,28 +16,35 @@ namespace VoxelbasedCom
 		private float voxelSize = 1.0f;
 		public Boxel(Isosurface isosurface, Vector3 offset, int chunkSize) : base(isosurface, offset, chunkSize)
 		{
-		}
+            //INSTEAD SHOULD WAIT FOR NOSIE TO BE READY
+            CompleteDensityJob();
+            meshData = new MeshData()
+            {
+                vertices = new NativeArray<float3>(chunkSize * chunkSize * chunkSize * 5 * 3, Allocator.Persistent, NativeArrayOptions.UninitializedMemory),
+                triangles = new NativeArray<int>(chunkSize * chunkSize * chunkSize * 5 * 3, Allocator.Persistent, NativeArrayOptions.UninitializedMemory),
+                normals = new NativeArray<float3>(chunkSize * chunkSize * chunkSize * 5 * 3, Allocator.Persistent, NativeArrayOptions.UninitializedMemory),
+                counter = new Counter(Allocator.Persistent)
 
-		public override bool GetMeshData(out MeshData meshData)
-		{
-			vertices = new List<Vector3>();
-			normals = new List<Vector3>();
-			triangles = new List<int>();
+            };
 
-			 CreateBlocks();
 
-			meshData = new MeshData
-			{
-				//vertices = vertices,
-				normals = normals,
-				//triangles = triangles
-			};
-            return true;
-		}
+            ScheduleMeshJob();
+        }
 
-        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        protected override JobHandle StartMeshJob(JobHandle inputDeps = default)
         {
-            throw new NotImplementedException();
+            var boxelJob = new BoxelJob()
+            {
+                chunkSize = chunkSize,
+                counter = meshData.counter,
+                densities = DensityField,
+                isoLevel = 0f,
+                normals = meshData.normals,
+                triangles = meshData.triangles,
+                vertices = meshData.vertices
+            };
+            meshingHandle = boxelJob.Schedule(chunkSize * chunkSize * chunkSize, 64, inputDeps);
+            return meshingHandle;
         }
 
         private void CreateBlocks()

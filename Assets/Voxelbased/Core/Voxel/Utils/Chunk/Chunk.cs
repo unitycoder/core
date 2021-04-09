@@ -61,7 +61,7 @@ namespace VoxelbasedCom
         {
             if (waitingForMesh)
             {
-                if (meshBuilder.GetMeshData(out MeshData meshData))
+                if (meshBuilder.TryGetMeshData(out MeshData meshData))
                 {
                     GenerateMesh(meshData);
                 }
@@ -76,7 +76,7 @@ namespace VoxelbasedCom
         public void BuildChunk()
         {
             //chunkState = ChunkState.Waiting;
-            if (meshBuilder.GetMeshData(out MeshData meshData))
+            if (meshBuilder.TryGetMeshData(out MeshData meshData))
             {
                 Debug.Log("Mesh was ready on the same frame it was requested. Cool.");
                 GenerateMesh(meshData);
@@ -124,7 +124,8 @@ namespace VoxelbasedCom
             mesh.SetSubMesh(0, desc, MeshUpdateFlags.DontValidateIndices);
             
             mesh.uv = new Vector2[vertexCount];
-            mesh.SetNormals(data.normals);
+            if(data.normals != null)
+                //mesh.SetNormals(data.normals);
 
             meshFilter.mesh = mesh;
 

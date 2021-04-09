@@ -35,7 +35,7 @@ namespace VoxelbasedCom
             triangles = new List<int>();
         }
 
-        public override bool GetMeshData(out MeshData meshData)
+        /*public override bool GetMeshData(out MeshData meshData)
         {
             Row.size = chunkSize + 3;
             verticesCount = 0;
@@ -77,7 +77,7 @@ namespace VoxelbasedCom
                 //triangles = triangles
             };
             return true;
-        }
+        }*/
 
         /// <summary>
         /// Calculate points in row and generate cubes
@@ -522,7 +522,7 @@ namespace VoxelbasedCom
             pOut = new Vector3(x, y, zm);
         }
 
-        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        protected override JobHandle StartMeshJob(JobHandle inputDeps = default)
         {
             throw new NotImplementedException();
         }

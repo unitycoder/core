@@ -20,7 +20,7 @@ namespace VoxelbasedCom
         public CubicalMarchingSquares(Isosurface isosurface, Vector3 offset, int chunkSize) : base(isosurface, offset, chunkSize)
         { } 
 
-        public override bool GetMeshData(out MeshData meshData)
+        /*public override bool GetMeshData(out MeshData meshData)
         {
             GetMesh();
 
@@ -33,7 +33,7 @@ namespace VoxelbasedCom
                 normals = normals
             };
             return true;
-        }
+        }*/
 
         private Vector3 GetNormal(Vector3 p)
         {
@@ -185,7 +185,7 @@ namespace VoxelbasedCom
             return a * (1 - s) + b * s;
         }
 
-        protected override JobHandle OnMeshJobScheduled(JobHandle inputDeps = default)
+        protected override JobHandle StartMeshJob(JobHandle inputDeps = default)
         {
             throw new NotImplementedException();
         }
