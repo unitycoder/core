@@ -8,6 +8,12 @@
   <br>
 </p>
 
+## Job System Branch
+
+- Currently the only working solution on this branch is marching cubes
+- Top priority is to port other existing solutions to the Job System
+- Check Trello for more information
+
 ## :statue_of_liberty: Community
 
 Join the conversation and help the community.
