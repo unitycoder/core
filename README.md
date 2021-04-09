@@ -4,7 +4,7 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/voxelbased/core/master/images/voxelbased-logo.png" alt="voxelbased-logo" width="180px" height="180px"/>
   <br>
-  <i>Voxel based is an voxel algorithm implementations for Unity Engine.</i>
+  <i>Voxel based is a voxel algorithm implementations for Unity Engine.</i>
   <br>
 </p>
 
