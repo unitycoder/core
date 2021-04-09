@@ -16,19 +16,19 @@ Join the conversation and help the community.
 - [Twitter][twitter]
 - [Website][website]
 
-##  🔭Follow our progress
+## 🔭Follow our progress
 
 <p align="center"><a href="https://trello.com/b/PNrqXXN0/voxel-based">Follow our progress on  Trello</a></p> 
 
 ## :star2: Special thanks for
 **theSoenke** [Github][githubtheSoenkeProceduralTerrain]
-To allow us to use his code as based from our prject
+He allowed us to use his code as a base for our project
 
 **Tomasz Foster** and **Andrew Gotow** [Github][githubNaiveSurfaceNets]
-To allow us to use their Naive Surface Nets implementation
+They allowed us to use their Naive Surface Nets implementation
 
- **alia** [Source code][sourceMarchingTetrahedra]
- To shared Marching Tetrahedra codebase
+**alia** [Source code][sourceMarchingTetrahedra]
+To shared Marching Tetrahedra codebase
  
 **lonelyProgrammerWeeb**, **Fobri** and **PatrikHoller**
 To created the core of this project
