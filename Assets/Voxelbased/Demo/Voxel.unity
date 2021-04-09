@@ -246,7 +246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   voxel: {fileID: 1153055729}
   cam: {fileID: 486270967}
-  shape: 0
+  shape: 1
   size: 3
 --- !u!1 &486270965
 GameObject:
@@ -364,7 +364,7 @@ MonoBehaviour:
   chunkPrefab: {fileID: 2985511964130480932, guid: 456a693c501e91748878a18bc055ee80, type: 3}
   chunkSize: 16
   isosurfaceAlgorithm: 5
-  shape: 0
+  shape: 1
   drawGizmo: 1
 --- !u!4 &1153055731
 Transform:
@@ -396,7 +396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1638658795
 Transform:
   m_ObjectHideFlags: 0

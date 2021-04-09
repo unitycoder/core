@@ -6,21 +6,22 @@ namespace VoxelbasedCom
 {
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(MeshRenderer))]
-    [ExecuteInEditMode]
+    [RequireComponent(typeof(MeshCollider))]
     public class Chunk : MonoBehaviour
     {
-        private MeshCollider meshCollider;
         private MeshFilter meshFilter;
         private MeshRenderer meshRenderer;
+        private MeshCollider meshCollider;
+
         private Isosurface isosurface;
         private MeshBuilder meshBuilder;
       
 
         private void OnEnable()
         {
-            meshCollider = GetComponent<MeshCollider>();
             meshFilter = GetComponent<MeshFilter>();
             meshRenderer = GetComponent<MeshRenderer>();
+            meshCollider = GetComponent<MeshCollider>();
         }
 
         /// <summary>
@@ -50,21 +51,12 @@ namespace VoxelbasedCom
         /// <param name="data">Contains data to build mesh</param>
         public void GenerateMesh(MeshData data)
         {
-    
             if (data.vertices.Count == 0)
             {
                 return;
             }
 
-            Mesh mesh = meshFilter.sharedMesh;
-            if (mesh == null)
-            {
-                mesh = new Mesh();
-            }
-            else
-            {
-                mesh.Clear();
-            }
+            Mesh mesh = new Mesh(); 
 
             mesh.SetVertices(data.vertices);
             mesh.SetTriangles(data.triangles, 0);
@@ -72,15 +64,7 @@ namespace VoxelbasedCom
             mesh.SetNormals(data.normals);
 
             meshFilter.mesh = mesh;
-
-            if(GetComponent<MeshCollider>() != null)
-            {
-                GetComponent<MeshCollider>().sharedMesh = mesh;
-            }
-
-            if (gameObject != null)
-            gameObject.SetActive(true);
-
+            meshCollider.sharedMesh = mesh;
         }
     }
 }

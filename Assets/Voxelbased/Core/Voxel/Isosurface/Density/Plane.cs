@@ -15,9 +15,9 @@ namespace VoxelbasedCom
 		
 		public override float GetDensity(float x, float y, float z)
 		{
-			 y  -= y / height;
 
-			return height;
+
+			return y - height;
 		}
 	}
 }

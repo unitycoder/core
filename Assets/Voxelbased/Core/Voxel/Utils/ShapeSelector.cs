@@ -15,6 +15,9 @@ namespace VoxelbasedCom
 
             switch (shapeType)
             {
+                case Shape.None:
+                    density = new None();
+                    break;
                 case Shape.Sphere:
                     density = new Sphere(centerPoint, radius - 1f);
                     break;
@@ -52,6 +55,7 @@ namespace VoxelbasedCom
 
     public enum Shape
     {
+        None,
         Sphere,
         Cube,
         Capsule,
