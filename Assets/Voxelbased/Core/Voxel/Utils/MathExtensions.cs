@@ -13,29 +13,52 @@ namespace VoxelbasedCom.Extensions
         }
 
 
-        public static float3 up(this float3 x)
+        
+    }
+
+    public static class Float3
+    {
+        public static float3 up
         {
-            return new float3(0, 1, 0);
+            get
+            {
+                return new float3(0, 1, 0);
+            }
         }
-        public static float3 down(this float3 x)
+        public static float3 down
         {
-            return new float3(0, -1, 0);
+            get
+            {
+                return new float3(0, -1, 0);
+            }
         }
-        public static float3 right(this float3 x)
+        public static float3 right
         {
-            return new float3(1, 0, 0);
+            get
+            {
+                return new float3(1, 0, 0);
+            }
         }
-        public static float3 left(this float3 x)
+        public static float3 left
         {
-            return new float3(-1, 0, 0);
+            get
+            {
+                return new float3(-1, 0, 0);
+            }
         }
-        public static float3 forward(this float3 x)
+        public static float3 forward
         {
-            return new float3(0, 0, 1);
+            get
+            {
+                return new float3(0, 0, 1);
+            }
         }
-        public static float3 back(this float3 x)
+        public static float3 back
         {
-            return new float3(0, 0, -1);
+            get
+            {
+                return new float3(0, 0, -1);
+            }
         }
     }
 }
