@@ -285,7 +285,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.4950605, g: 0.7378617, b: 0.8396226, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -364,8 +364,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunkPrefab: {fileID: 2985511964130480932, guid: 456a693c501e91748878a18bc055ee80, type: 3}
   chunkSize: 16
-  isosurfaceAlgorithm: 3
-  shape: 9
+  isosurfaceAlgorithm: 1
+  shape: 4
   drawGizmo: 1
 --- !u!4 &1153055731
 Transform:
