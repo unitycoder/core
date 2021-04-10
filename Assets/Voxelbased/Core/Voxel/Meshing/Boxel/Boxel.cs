@@ -31,6 +31,11 @@ namespace VoxelbasedCom.Boxel
             ScheduleMeshJob();
         }
 
+        public override int GetTriangleMultiplier()
+        {
+            return 6;
+        }
+
         protected override JobHandle StartMeshJob(JobHandle inputDeps = default)
         {
             var boxelJob = new BoxelJob()

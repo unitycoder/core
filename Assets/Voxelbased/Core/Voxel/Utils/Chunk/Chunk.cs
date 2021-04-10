@@ -103,7 +103,7 @@ namespace VoxelbasedCom
 
             mesh.bounds = new Bounds(new float3(chunkSize / 2), new float3(chunkSize));
 
-            var vertexCount = data.counter.Count * 3;
+            var vertexCount = data.counter.Count * meshBuilder.GetTriangleMultiplier();
             if (vertexCount == 0)
             {
                 return;

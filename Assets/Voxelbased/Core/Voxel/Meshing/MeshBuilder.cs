@@ -17,6 +17,12 @@ namespace VoxelbasedCom
         protected readonly Vector3 offset;
         protected Triangle triangle = new Triangle();
 
+        //How many indices there is in relation to the counters value. If you add one triangle per counter increment it's 3. if you add two triangles per counter increment, it's 6.
+        public virtual int GetTriangleMultiplier()
+        {
+            return 3;
+        }
+
         protected MeshBuilder(Isosurface isosurface, Vector3 offset, int chunkSize)
         {
             this.isosurface = isosurface;
