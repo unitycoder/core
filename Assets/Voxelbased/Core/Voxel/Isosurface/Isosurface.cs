@@ -86,23 +86,25 @@ namespace VoxelbasedCom
         {
             float baseDensity = densityField[CoordinateConversion.Flatten((int)x, (int)y, (int)z, chunkSize)];
 
-            foreach (ModifyVertex item in modifyVertex.Values)
+            //Modify the density
+            foreach (BaseModification modification in modifiers.Values)
             {
-                //Density d = shapeSelector.GetShapeDensity(item.shapeType, item.position, item.shapeSize);
+                Density shapeDensity = shapeSelector.GetShapeDensity(modification.shapeType, modification.position, modification.shapeSize);
 
-                //float shapeDensity = d.GetDensity(x, y, z);
+                float modificationDensity = shapeDensity.GetDensity(x,y,z);
 
-               /*if (item.processType == "Add")
+                switch (modification.operationType)
                 {
-                    if (shapeDensity < baseDensity)
-                        baseDensity = shapeDensity;
+                    case OperationType.Union:
+                        baseDensity = Mathf.Min(baseDensity, modificationDensity);
+                        break;
+                    case OperationType.Difference:
+                        baseDensity = Mathf.Max(baseDensity, -modificationDensity);
+                        break;
+                    case OperationType.Intersection:
+                        baseDensity = Mathf.Max(baseDensity, modificationDensity);
+                        break;
                 }
-                else if(item.processType == "Remove")
-                {
-                    if (-shapeDensity > baseDensity)
-                        baseDensity = -shapeDensity;
-                }*/
-
             }
             return baseDensity;
         }

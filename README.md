@@ -14,6 +14,8 @@
 - Top priority is to port other existing solutions to the Job System
 - Check Trello for more information
 
+![Voxel based preview](https://raw.githubusercontent.com/voxelbased/core/master/images/preview.gif)
+
 ## :statue_of_liberty: Community
 
 Join the conversation and help the community.
@@ -22,7 +24,7 @@ Join the conversation and help the community.
 - [Twitter][twitter]
 - [Website][website]
 
-## 🔭Follow our progress
+## 🔭 Follow our progress
 
 <p align="center"><a href="https://trello.com/b/PNrqXXN0/voxel-based">Follow our progress on  Trello</a></p> 
 

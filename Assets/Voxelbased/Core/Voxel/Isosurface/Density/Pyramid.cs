@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace VoxelbasedCom
 {
+	/// <summary>
+	/// Pyramid density.
+	/// </summary>
 	public class Pyramid : Density
 	{
 		private Vector3 center;
@@ -44,7 +45,23 @@ namespace VoxelbasedCom
 			};
 
 			return distanceFromConvexPlanes(planes, planeOffsets, x, y, z);
+		}
 
+		public float distanceFromConvexPlanes(float[,] planes, float[,] planeOffsets, float x, float y, float z)
+		{
+			var maxDistance = -Mathf.Infinity;
+			for (var i = 0; i < planes.GetLength(0); i++)
+			{
+				var x_ = x - planeOffsets[i, 0];
+				var y_ = y - planeOffsets[i, 1];
+				var z_ = z - planeOffsets[i, 2];
+
+				var dotProduct = planes[i, 0] * x_ + planes[i, 1] * y_ + planes[i, 2] * z_;
+
+				maxDistance = Mathf.Max(maxDistance, dotProduct);
+			}
+
+			return maxDistance;
 		}
 	}
 }

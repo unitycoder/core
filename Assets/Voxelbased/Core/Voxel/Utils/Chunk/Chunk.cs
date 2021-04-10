@@ -10,7 +10,7 @@ namespace VoxelbasedCom
 {
     [RequireComponent(typeof(MeshFilter))]
     [RequireComponent(typeof(MeshRenderer))]
-    [ExecuteInEditMode]
+    [RequireComponent(typeof(MeshCollider))]
     public class Chunk : MonoBehaviour
     {
 
@@ -22,6 +22,8 @@ namespace VoxelbasedCom
         private MeshCollider meshCollider;
         private MeshFilter meshFilter;
         private MeshRenderer meshRenderer;
+        private MeshCollider meshCollider;
+
         private Isosurface isosurface;
         private MeshBuilder meshBuilder;
         //Mesh was not ready on the same frame, so we need to wait more frames.
@@ -31,9 +33,9 @@ namespace VoxelbasedCom
 
         private void OnEnable()
         {
-            meshCollider = GetComponent<MeshCollider>();
             meshFilter = GetComponent<MeshFilter>();
             meshRenderer = GetComponent<MeshRenderer>();
+            meshCollider = GetComponent<MeshCollider>();
         }
 
         /// <summary>
@@ -93,13 +95,7 @@ namespace VoxelbasedCom
         {
             waitingForMesh = false;
 
-            Mesh mesh = meshFilter.sharedMesh;
-            if (mesh == null)
-            {
-                mesh = new Mesh();
-            }
-
-            mesh.Clear();
+            Mesh mesh = new Mesh();
 
             mesh.bounds = new Bounds(new float3(chunkSize / 2), new float3(chunkSize));
 
@@ -128,11 +124,7 @@ namespace VoxelbasedCom
                 //mesh.SetNormals(data.normals);
 
             meshFilter.mesh = mesh;
-
-            if(GetComponent<MeshCollider>() != null)
-            {
-                GetComponent<MeshCollider>().sharedMesh = mesh;
-            }
+            meshCollider.sharedMesh = mesh;
 
             if (gameObject != null)
             gameObject.SetActive(true);
