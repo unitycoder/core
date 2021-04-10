@@ -47,13 +47,13 @@ namespace VoxelbasedCom
             switch (operationType)
             {
                 case OperationType.Union:
-                    densityField[index] = Mathf.Min(densityField[index], value);
+                    densityField[index] = math.min(densityField[index], value);
                     break;
                 case OperationType.Difference:
-                    densityField[index] = Mathf.Max(densityField[index], -value);
+                    densityField[index] = math.min(densityField[index], -value);
                     break;
                 case OperationType.Intersection:
-                    densityField[index] = Mathf.Max(densityField[index], value);
+                    densityField[index] = math.min(densityField[index], value);
                     break;
             }
 

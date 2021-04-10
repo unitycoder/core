@@ -65,23 +65,6 @@ namespace VoxelbasedCom
             }
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-                DemoModification();
-        }
-
-        private void DemoModification()
-        {
-            float3 pos = new float3(Random.Range(0, chunkSize * 2), Random.Range(0, chunkSize * 2), Random.Range(0, chunkSize * 2));
-            foreach (Transform chunk in transform)
-            {
-                
-                chunk.GetComponent<Chunk>().ModifyChunk(shape, pos, centerPoint, OperationType.Union);
-            }
-            
-        }
-
         private void PlaceChunk(Vector3 chunkPos)
         {
             GameObject chunkGameObject = Object.Instantiate(chunkPrefab);
