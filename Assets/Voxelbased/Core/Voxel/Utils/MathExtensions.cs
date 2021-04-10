@@ -18,6 +18,9 @@ namespace VoxelbasedCom.Extensions
 
     public static class Float3
     {
+        /// <summary>
+        /// Shorter version of new float3(0, 1, 0);
+        /// </summary>
         public static float3 up
         {
             get
@@ -25,6 +28,9 @@ namespace VoxelbasedCom.Extensions
                 return new float3(0, 1, 0);
             }
         }
+        /// <summary>
+        /// Shorter version of new float3(0, -1, 0);
+        /// </summary>
         public static float3 down
         {
             get
@@ -32,6 +38,9 @@ namespace VoxelbasedCom.Extensions
                 return new float3(0, -1, 0);
             }
         }
+        /// <summary>
+        /// Shorter version of new float3(1, 0, 0);
+        /// </summary>
         public static float3 right
         {
             get
@@ -39,6 +48,9 @@ namespace VoxelbasedCom.Extensions
                 return new float3(1, 0, 0);
             }
         }
+        /// <summary>
+        /// Shorter version of new float3(-1, 0, 0);
+        /// </summary>
         public static float3 left
         {
             get
@@ -46,6 +58,9 @@ namespace VoxelbasedCom.Extensions
                 return new float3(-1, 0, 0);
             }
         }
+        /// <summary>
+        /// Shorter version of new float3(0, 0, 1);
+        /// </summary>
         public static float3 forward
         {
             get
@@ -53,6 +68,9 @@ namespace VoxelbasedCom.Extensions
                 return new float3(0, 0, 1);
             }
         }
+        /// <summary>
+        /// Shorter version of new float3(0, 0, -1);
+        /// </summary>
         public static float3 back
         {
             get
