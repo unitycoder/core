@@ -9,8 +9,6 @@ namespace VoxelbasedCom.MarchingCubes
     public class MarchingCubes : MeshBuilder
     {
         private const float IsoLevel = 0; // The value that represents the surface of mesh
-        private const float Target = 0; // The value that represents the surface of mesh
-        private const float NormalSmoothing = 90; // set 90 if you want to shape to be smooter
 
         public MarchingCubes(Isosurface isosurface, Vector3 offset, int chunkSize) : base(isosurface, offset, chunkSize)
         {

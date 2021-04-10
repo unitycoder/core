@@ -364,9 +364,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chunkPrefab: {fileID: 2985511964130480932, guid: 456a693c501e91748878a18bc055ee80, type: 3}
   chunkSize: 16
-  isosurfaceAlgorithm: 0
+  isosurfaceAlgorithm: 1
   shape: 3
-  simulation: 0
+  simulation: 1
   drawGizno: 1
 --- !u!4 &1153055731
 Transform:

@@ -20,6 +20,7 @@ namespace VoxelbasedCom
 
         public Isosurface(ShapeSelector shapeSelector, IsosurfaceAlgorithm algorithm, Dictionary<Vector3, BaseModification> modifiers, bool preGenerate, int chunkSize, int3 chunkPos, DensityProperties densityProperties)
         {
+            this.shapeSelector = shapeSelector;
             this.isosurfaceAlgorithm = algorithm;
             this.modifiers = modifiers;
             this.densityProperties = densityProperties;
