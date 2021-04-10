@@ -10,7 +10,7 @@
 
 ## Job System Branch
 
-- Currently the only working solution on this branch is marching cubes
+- Currently the only working solutions on this branch are marching cubes and boxel
 - Top priority is to port other existing solutions to the Job System
 - Check Trello for more information
 
