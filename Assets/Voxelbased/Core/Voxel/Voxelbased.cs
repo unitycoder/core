@@ -20,8 +20,8 @@ namespace VoxelbasedCom
 
         private int radius;
         private float centerPoint;
-        private ShapeSelector shapeSelector;
-        private Density density;
+        public ShapeSelector shapeSelector;
+        public Density density;
         private Queue<Chunk> chunksToGenerate;
 
         readonly Dictionary<IsosurfaceAlgorithm, int> borderSizes = new Dictionary<IsosurfaceAlgorithm, int>()
@@ -104,7 +104,7 @@ namespace VoxelbasedCom
 
                 Chunk chunk = chunksToGenerate.Dequeue();
 
-                var isosurface = new Isosurface(isosurfaceAlgorithm, new Dictionary<Vector3, ModifyVertex>(), true, chunk.chunkSize, chunk.chunkPos, new DensityProperties()
+                var isosurface = new Isosurface(shapeSelector, isosurfaceAlgorithm, new Dictionary<Vector3, BaseModification>(), true, chunk.chunkSize, chunk.chunkPos, new DensityProperties()
                 {
                     borderSize = borderSizes[isosurfaceAlgorithm],
                     centerPoint = centerPoint,

@@ -9,18 +9,19 @@ namespace VoxelbasedCom
 {
     public class Isosurface : IDisposable
     {
+        public ShapeSelector shapeSelector;
         public IsosurfaceAlgorithm isosurfaceAlgorithm;
-        private Dictionary<Vector3, ModifyVertex> modifyVertex;
+        private Dictionary<Vector3, BaseModification> modifiers;
 
         public JobHandle densityHandle;
         public NativeArray<float> densityField;
 
         DensityProperties densityProperties;
 
-        public Isosurface(IsosurfaceAlgorithm algorithm, Dictionary<Vector3, ModifyVertex> modifyVertex, bool preGenerate, int chunkSize, int3 chunkPos, DensityProperties densityProperties)
+        public Isosurface(ShapeSelector shapeSelector, IsosurfaceAlgorithm algorithm, Dictionary<Vector3, BaseModification> modifiers, bool preGenerate, int chunkSize, int3 chunkPos, DensityProperties densityProperties)
         {
             this.isosurfaceAlgorithm = algorithm;
-            this.modifyVertex = modifyVertex;
+            this.modifiers = modifiers;
             this.densityProperties = densityProperties;
 
             if (preGenerate)

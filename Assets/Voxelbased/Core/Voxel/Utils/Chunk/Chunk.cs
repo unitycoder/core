@@ -22,7 +22,6 @@ namespace VoxelbasedCom
         private MeshCollider meshCollider;
         private MeshFilter meshFilter;
         private MeshRenderer meshRenderer;
-        private MeshCollider meshCollider;
 
         private Isosurface isosurface;
         private MeshBuilder meshBuilder;

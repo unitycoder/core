@@ -246,10 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d14fb01cfd7d4940be2a867d60eaf0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  voxelbased: {fileID: 0}
-  cam: {fileID: 486270967}
-  shape: 1
-  size: 3
+  speed: 1
+  fastSpeed: 2
+  mouseSpeed: 4
 --- !u!1 &486270965
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,8 +365,8 @@ MonoBehaviour:
   chunkPrefab: {fileID: 2985511964130480932, guid: 456a693c501e91748878a18bc055ee80, type: 3}
   chunkSize: 16
   isosurfaceAlgorithm: 0
-  shape: 2
-  simulation: 2
+  shape: 3
+  simulation: 0
   drawGizno: 1
 --- !u!4 &1153055731
 Transform:
