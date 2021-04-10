@@ -52,7 +52,7 @@ namespace VoxelbasedCom
             BuildChunk();
         }
 
-        public void ModifyChunk(Shape shape, float3 pos, float radius, DensityOperationType operationType)
+        public void ModifyChunk(Shape shape, float3 pos, float radius, OperationType operationType)
         {
             meshBuilder.ScheduleMeshJob(isosurface.ScheduleDensityModification(shape, pos, radius, operationType, chunkSize, chunkPos));
             waitingForMesh = true;

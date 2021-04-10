@@ -11,7 +11,6 @@ using System.Runtime.CompilerServices;
 namespace VoxelbasedCom
 {
     public enum SimulationType { None, Expand, Sin }
-    public enum DensityOperationType { SET, ADD, SUBTRACT }
 
     [BurstCompile]
     public struct DensityJob : IJobParallelFor
@@ -32,7 +31,7 @@ namespace VoxelbasedCom
 
         //Density variables
         [NativeDisableParallelForRestriction] public NativeArray<float> densityField;
-        [ReadOnly] public DensityOperationType operationType;
+        [ReadOnly] public OperationType operationType;
 
         public void Execute(int index)
         {
@@ -45,13 +44,18 @@ namespace VoxelbasedCom
             else if(simType == SimulationType.Sin)
                 value += math.sin(time + localPos.x + chunkOffset.x) * 0.05f;
 
-
-            if (operationType == DensityOperationType.ADD)
-                densityField[index] += value;
-            else if (operationType == DensityOperationType.SUBTRACT)
-                densityField[index] -= value;
-            else
-                densityField[index] = value;
+            switch (operationType)
+            {
+                case OperationType.Union:
+                    densityField[index] = Mathf.Min(densityField[index], value);
+                    break;
+                case OperationType.Difference:
+                    densityField[index] = Mathf.Max(densityField[index], -value);
+                    break;
+                case OperationType.Intersection:
+                    densityField[index] = Mathf.Max(densityField[index], value);
+                    break;
+            }
 
             densityField[index] = math.clamp(densityField[index], -1f, 1f);
         }

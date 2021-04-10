@@ -77,7 +77,7 @@ namespace VoxelbasedCom
             foreach (Transform chunk in transform)
             {
                 
-                chunk.GetComponent<Chunk>().ModifyChunk(shape, pos, centerPoint, DensityOperationType.SET);
+                chunk.GetComponent<Chunk>().ModifyChunk(shape, pos, centerPoint, OperationType.Union);
             }
             
         }
