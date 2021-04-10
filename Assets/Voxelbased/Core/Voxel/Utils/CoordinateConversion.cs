@@ -13,7 +13,7 @@ namespace VoxelbasedCom
         }
         public static int Flatten(int x, int y, int z, int size)
         {
-            return x + y * size + z * size * size;
+            return x * size * size + y * size + z;
         }
 
         public static int3 Expand(int index, int size)
