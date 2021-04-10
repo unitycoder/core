@@ -8,20 +8,15 @@ namespace VoxelbasedCom
     public class BaseModification
     {
         public Vector3 position;
-        public Density density;
         public OperationType operationType;
-        public BaseModification(Vector3 position, Density density, OperationType operationType)
+        public Shape shapeType;
+        public float shapeSize;
+        public BaseModification(Vector3 position, OperationType operationType, Shape shapeType, float shapeSize)
         {
             this.position = position;
-            this.density = density;
             this.operationType = operationType;
+            this.shapeType = shapeType;
+            this.shapeSize = shapeSize;
         }
-    }
-    /// <summary>
-    /// How to change the density function based on the BaseModification densities
-    /// </summary>
-    public enum OperationType 
-    {
-        Union, Subtraction, Intersection
     }
 }

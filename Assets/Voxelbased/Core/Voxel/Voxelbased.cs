@@ -19,10 +19,10 @@ namespace VoxelbasedCom
 
         void Awake()
         {
-            chunksToGenerate = new Queue<Chunk>();
-
             radius = chunkSize * 2;
             centerPoint = radius / 2f;
+
+            chunksToGenerate = new Queue<Chunk>();
             shapeSelector = new ShapeSelector();
 
             density = shapeSelector.GetShapeDensity(shape, transform.position + new Vector3(centerPoint, centerPoint, centerPoint), centerPoint);
@@ -65,7 +65,7 @@ namespace VoxelbasedCom
         {
             if (chunksToGenerate.Count > 0)
             {
-                var isosurface = new Isosurface(shapeSelector, density, isosurfaceAlgorithm, new Dictionary<Vector3, ModifyVertex>());
+                var isosurface = new Isosurface(shapeSelector, density, isosurfaceAlgorithm, new Dictionary<Vector3, BaseModification>());
                 Chunk chunk = chunksToGenerate.Dequeue();
                 chunk.CreateChunk(isosurface, chunkSize);
             }

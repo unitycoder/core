@@ -12,9 +12,9 @@ namespace VoxelbasedCom
         public ShapeSelector shapeSelector;
         public Density density;
         public IsosurfaceAlgorithm isosurfaceAlgorithm;
-        private Dictionary<Vector3, ModifyVertex> modifiers;
+        private Dictionary<Vector3, BaseModification> modifiers;
 
-        public Isosurface(ShapeSelector shapeSelector, Density density, IsosurfaceAlgorithm algorithm, Dictionary<Vector3, ModifyVertex> modifiers)
+        public Isosurface(ShapeSelector shapeSelector, Density density, IsosurfaceAlgorithm algorithm, Dictionary<Vector3, BaseModification> modifiers)
         {
             this.isosurfaceAlgorithm = algorithm;
             this.density = density;
@@ -28,38 +28,23 @@ namespace VoxelbasedCom
         {
             float baseDensity = density.GetDensity(x, y, z);
             //Modify the density
-            foreach (ModifyVertex modification in modifiers.Values)
+            foreach (BaseModification modification in modifiers.Values)
             {
-                //float modificationDensity = modification.density.GetDensity(modification.position.x, modification.position.y, modification.position.z);
+                Density shapeDensity = shapeSelector.GetShapeDensity(modification.shapeType, modification.position, modification.shapeSize);
 
-                //switch (modification.operationType)
-                //{
-                //    case OperationType.Union:
-                //        baseDensity = Mathf.Min(baseDensity, modificationDensity);
-                //        break;
-                //    case OperationType.Subtraction:
-                //        baseDensity = Mathf.Max(baseDensity, -modificationDensity);
-                //        break;
-                //    case OperationType.Intersection:
-                //        baseDensity = Mathf.Max(baseDensity, modificationDensity);
-                //        break;
-                //    default:
-                //        break;
-                //}
+                float modificationDensity = shapeDensity.GetDensity(x,y,z);
 
-                Density d = shapeSelector.GetShapeDensity(modification.shapeType, modification.position, modification.shapeSize);
-
-                float shapeDensity = d.GetDensity(x, y, z);
-
-                if (modification.processType == "Add")
+                switch (modification.operationType)
                 {
-                    if (shapeDensity < baseDensity)
-                        baseDensity = shapeDensity;
-                }
-                else if (modification.processType == "Remove")
-                {
-                    if (-shapeDensity > baseDensity)
-                        baseDensity = -shapeDensity;
+                    case OperationType.Union:
+                        baseDensity = Mathf.Min(baseDensity, modificationDensity);
+                        break;
+                    case OperationType.Subtraction:
+                        baseDensity = Mathf.Max(baseDensity, -modificationDensity);
+                        break;
+                    case OperationType.Intersection:
+                        baseDensity = Mathf.Max(baseDensity, modificationDensity);
+                        break;
                 }
             }
             return baseDensity;

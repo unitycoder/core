@@ -246,8 +246,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   voxel: {fileID: 1153055729}
   cam: {fileID: 486270967}
-  shape: 2
-  size: 6
+  shape: 1
+  shapeSize: 5
+  operationType: 0
 --- !u!1 &486270965
 GameObject:
   m_ObjectHideFlags: 0

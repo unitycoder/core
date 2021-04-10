@@ -26,7 +26,7 @@ namespace VoxelbasedCom
 
 			float distance = x * x + y * y + z * z;
 			float radiusSqrt = Mathf.Pow(radius, 2);
-			float noise = (float)PerlinNoise3D(x, y, z);
+			float noise = PerlinNoise3D(x, y, z);
 
 			return distance - radiusSqrt - noise;
 		}
