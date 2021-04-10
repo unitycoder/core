@@ -43,7 +43,10 @@ namespace VoxelbasedCom
                     density = new GoursatsSurface(centerPoint, radius);
                     break;
                 case Shape.Plane:
-                    density = new Plane(centerPoint.y / 2);
+                    density = new Plane(centerPoint, radius);
+                    break;
+                case Shape.Planet:
+                    density = new Planet(centerPoint, radius - 5f);
                     break;
                 default:
                     density = new Rubin(centerPoint, radius);
@@ -65,5 +68,6 @@ namespace VoxelbasedCom
         Rubin,
         GoursatsSurface,
         Plane,
+        Planet
     }
 }
