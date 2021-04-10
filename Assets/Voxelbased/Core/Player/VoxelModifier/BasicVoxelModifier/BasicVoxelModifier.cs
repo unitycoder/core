@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace VoxelbasedCom
 {
-    public class ModifyVoxel : MonoBehaviour
+    public class BasicVoxelModifier : MonoBehaviour
     {
         public GameObject voxel;
         public Camera cam;

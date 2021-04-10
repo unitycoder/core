@@ -39,7 +39,7 @@ namespace VoxelbasedCom
                     case OperationType.Union:
                         baseDensity = Mathf.Min(baseDensity, modificationDensity);
                         break;
-                    case OperationType.Subtraction:
+                    case OperationType.Difference:
                         baseDensity = Mathf.Max(baseDensity, -modificationDensity);
                         break;
                     case OperationType.Intersection:
