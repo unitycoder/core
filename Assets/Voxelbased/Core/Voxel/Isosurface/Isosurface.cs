@@ -43,7 +43,7 @@ namespace VoxelbasedCom
             }
         }
 
-        public JobHandle ScheduleDensityModification(Shape shape, float3 modificationCenter, float modificationRadius, DensityOperationType operationType, int chunkSize, int3 chunkPos)
+        public JobHandle ScheduleDensityModification(Shape shape, float3 modificationCenter, float modificationRadius, OperationType operationType, int chunkSize, int3 chunkPos)
         {
             if (!densityField.IsCreated) return default;
 

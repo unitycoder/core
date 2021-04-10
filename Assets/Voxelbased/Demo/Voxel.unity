@@ -366,7 +366,7 @@ MonoBehaviour:
   chunkSize: 16
   isosurfaceAlgorithm: 1
   shape: 3
-  simulation: 1
+  simulation: 0
   drawGizno: 1
 --- !u!4 &1153055731
 Transform:
