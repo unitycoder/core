@@ -23,6 +23,15 @@ namespace VoxelbasedCom
             return 3;
         }
 
+        //Is there a meshing job running
+        public bool JobRunning
+        {
+            get
+            {
+                return !meshingHandle.IsCompleted;
+            }
+        }
+
         protected MeshBuilder(Isosurface isosurface, Vector3 offset, int chunkSize)
         {
             this.isosurface = isosurface;
@@ -35,19 +44,22 @@ namespace VoxelbasedCom
         //change to abstract when all meshing options can support this
         public JobHandle ScheduleMeshJob(bool regenerateDensity = false)
         {
-            if (meshData == null) return default;
-            meshData.counter.Count = 0;
-
-            return StartMeshJob(regenerateDensity ? ScheduleDensityJob() : default);
+            return ValidateMeshJob(regenerateDensity ? ScheduleDensityJob() : default);
         }
         public JobHandle ScheduleMeshJob(JobHandle inputDeps)
         {
+            return ValidateMeshJob(inputDeps);
+        }
+
+        JobHandle ValidateMeshJob(JobHandle inputDeps)
+        {
             if (meshData == null) return default;
+            if (!meshingHandle.IsCompleted) return default;
+
             meshData.counter.Count = 0;
 
             return StartMeshJob(inputDeps);
         }
-
         protected abstract JobHandle StartMeshJob(JobHandle inputDeps = default);
 
         public bool TryGetMeshData(out MeshData meshData)

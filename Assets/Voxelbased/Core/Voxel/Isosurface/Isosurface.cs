@@ -16,18 +16,22 @@ namespace VoxelbasedCom
         public JobHandle densityHandle;
         public NativeArray<float> densityField;
 
-        DensityProperties densityProperties;
+        DensityProperties baseDensity;
 
-        public Isosurface(ShapeSelector shapeSelector, IsosurfaceAlgorithm algorithm, Dictionary<Vector3, BaseModification> modifiers, bool preGenerate, int chunkSize, int3 chunkPos, DensityProperties densityProperties)
+        /// <summary>
+        /// Create a new Isosurface instance
+        /// </summary>
+        /// <param name="index">The iteration index</param>
+        public Isosurface(ShapeSelector shapeSelector, IsosurfaceAlgorithm algorithm, Dictionary<Vector3, BaseModification> modifiers, bool preGenerate, int chunkSize, int3 chunkPos, DensityProperties baseDensity)
         {
             this.shapeSelector = shapeSelector;
             this.isosurfaceAlgorithm = algorithm;
             this.modifiers = modifiers;
-            this.densityProperties = densityProperties;
+            this.baseDensity = baseDensity;
 
             if (preGenerate)
             {
-                int chunkSizeWithBorder = chunkSize + densityProperties.borderSize;
+                int chunkSizeWithBorder = chunkSize + baseDensity.borderSize;
                 densityField = new NativeArray<float>(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, Allocator.Persistent);
 
                 var densityJob = new DensityJob()
@@ -35,9 +39,9 @@ namespace VoxelbasedCom
                     chunkOffset = chunkPos,
                     chunkSize = chunkSizeWithBorder,
                     densityField = densityField,
-                    shape = densityProperties.shape,
-                    shapeCenter = densityProperties.centerPoint,
-                    shapeRadius = densityProperties.shapeRadius,
+                    shape = baseDensity.shape,
+                    shapeCenter = baseDensity.centerPoint,
+                    shapeRadius = baseDensity.shapeRadius,
                 };
                 densityHandle = densityJob.Schedule(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, 64);
             }
@@ -46,8 +50,9 @@ namespace VoxelbasedCom
         public JobHandle ScheduleDensityModification(Shape shape, float3 modificationCenter, float modificationRadius, OperationType operationType, int chunkSize, int3 chunkPos)
         {
             if (!densityField.IsCreated) return default;
+            if (!densityHandle.IsCompleted) throw new Exception("There is a densityJob already running with the same handle!");
 
-            int chunkSizeWithBorder = chunkSize + densityProperties.borderSize;
+            int chunkSizeWithBorder = chunkSize + baseDensity.borderSize;
 
             var densityJob = new DensityJob()
             {
@@ -67,18 +72,19 @@ namespace VoxelbasedCom
         {
             if (!densityField.IsCreated) return default;
 
-            int chunkSizeWithBorder = chunkSize + densityProperties.borderSize;
+            int chunkSizeWithBorder = chunkSize + baseDensity.borderSize;
 
             var densityJob = new DensityJob()
             {
                 chunkOffset = chunkPos,
                 chunkSize = chunkSizeWithBorder,
                 densityField = densityField,
-                shape = densityProperties.shape,
-                shapeCenter = densityProperties.centerPoint,
-                shapeRadius = densityProperties.shapeRadius,
+                shape = baseDensity.shape,
+                shapeCenter = baseDensity.centerPoint,
+                shapeRadius = baseDensity.shapeRadius,
                 time = Time.time * 2,
-                simType = densityProperties.simulationType
+                simType = baseDensity.simulationType,
+                operationType = OperationType.Set
             };
             densityHandle = densityJob.Schedule(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, 64);
             return densityHandle;

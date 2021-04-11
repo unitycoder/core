@@ -30,6 +30,8 @@ namespace VoxelbasedCom
         //This is needed after mesh.SetIndexBuffer data to make the mesh visible, for some reason
         SubMeshDescriptor desc = new SubMeshDescriptor();
 
+        Queue<ModifyInstance> modificationQueue = new Queue<ModifyInstance>();
+
         private void OnEnable()
         {
             meshFilter = GetComponent<MeshFilter>();
@@ -54,8 +56,9 @@ namespace VoxelbasedCom
 
         public void ModifyChunk(Shape shape, float3 pos, float radius, OperationType operationType)
         {
-            meshBuilder.ScheduleMeshJob(isosurface.ScheduleDensityModification(shape, pos, radius, operationType, chunkSize, chunkPos));
-            waitingForMesh = true;
+            //meshBuilder.ScheduleMeshJob(isosurface.ScheduleDensityModification(shape, pos, radius, operationType, chunkSize, chunkPos));
+            //waitingForMesh = true;
+            modificationQueue.Enqueue(new ModifyInstance(shape, pos, radius, operationType));
         }
 
         private void Update()
@@ -65,6 +68,15 @@ namespace VoxelbasedCom
                 if (meshBuilder.TryGetMeshData(out MeshData meshData))
                 {
                     GenerateMesh(meshData);
+                }
+            }
+            else if(modificationQueue.Count > 0)
+            {
+                var modification = modificationQueue.Dequeue();
+                if(modification != null)
+                {
+                    meshBuilder.ScheduleMeshJob(isosurface.ScheduleDensityModification(modification.shape, modification.pos, modification.radius, modification.operationType, chunkSize, chunkPos));
+                    waitingForMesh = true;
                 }
             }
             else if (simType != SimulationType.None)
@@ -134,6 +146,22 @@ namespace VoxelbasedCom
         {
             meshBuilder.Dispose();
             isosurface.Dispose();
+        }
+
+        class ModifyInstance
+        {
+            public Shape shape;
+            public float3 pos;
+            public float radius;
+            public OperationType operationType;
+
+            public ModifyInstance(Shape shape, float3 pos, float radius, OperationType operationType)
+            {
+                this.shape = shape;
+                this.pos = pos;
+                this.radius = radius;
+                this.operationType = operationType;
+            }
         }
     }
 }

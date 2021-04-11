@@ -44,20 +44,25 @@ namespace VoxelbasedCom
             else if(simType == SimulationType.Sin)
                 value += math.sin(time + localPos.x + chunkOffset.x) * 0.05f;
 
+
+            float originalValue = densityField[index];
             switch (operationType)
             {
                 case OperationType.Union:
-                    densityField[index] = math.min(densityField[index], value);
+                    value = math.min(originalValue, value);
                     break;
                 case OperationType.Difference:
-                    densityField[index] = math.min(densityField[index], -value);
+                    value = math.max(originalValue, -value);
                     break;
                 case OperationType.Intersection:
-                    densityField[index] = math.min(densityField[index], value);
+                    value = math.max(originalValue, value);
+                    break;
+                case OperationType.Set:
                     break;
             }
 
-            densityField[index] = math.clamp(densityField[index], -1f, 1f);
+
+            densityField[index] = math.clamp(value, -1f, 1f);
         }
     }
 
