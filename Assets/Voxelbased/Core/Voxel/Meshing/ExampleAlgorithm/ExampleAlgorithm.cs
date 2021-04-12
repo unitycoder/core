@@ -26,7 +26,7 @@ namespace VoxelbasedCom
 			// but if we work lots of code we create another method like below:
 			CreateISOSurface();
 
-			// this will be return with calculated vvertices, normals and triangles
+			// this will be return with calculated vertices, normals and triangles
 			return new MeshData
 			{
 				vertices = vertices,

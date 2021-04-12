@@ -1,14 +1,14 @@
 
-<h1 align="center">Voxel based - voxelbased.com</h1>
+<h1 align="center">Voxel-based - voxelbased.com</h1>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/voxelbased/core/master/images/voxelbased-logo.png" alt="voxelbased-logo" width="180px" height="180px"/>
   <br>
-  <i>Voxel based is a voxel algorithm implementations for Unity Engine.</i>
+  <i>Voxel-based is a voxel algorithm implementations for Unity Engine.</i>
   <br>
 </p>
 
-## :heavy_check_mark: Voxel based contain the next isosurface algorithms:
+## :heavy_check_mark: Voxel-based contain the next isosurface algorithms
 - Boxel
 - Marching Cubes
 - Marching Tetrahedra
@@ -16,7 +16,7 @@
 - Dual Contouring of Hermite Data
 - Cubical Marching Squares
 
-![Voxel based preview](https://raw.githubusercontent.com/voxelbased/core/master/images/preview.gif)
+![Voxel-based preview](https://raw.githubusercontent.com/voxelbased/core/master/images/preview.gif)
 
 ## :statue_of_liberty: Community
 
@@ -58,9 +58,9 @@ Join the conversation and help the community.
 
 ## :copyright: License
 
-Voxel based is [MIT licensed](https://github.com/voxelbased/core/blob/main/LICENSE).
+Voxel-based is [MIT licensed](https://github.com/voxelbased/core/blob/main/LICENSE).
 
-**Love Voxel based? Give our repo a star :star: :arrow_up:.**
+**Love Voxel-based? Give our repo a star :star: :arrow_up:.**
 
 [discord]: https://discord.com/invite/aegudcbYhr
 [twitter]: https://twitter.com/voxelbasedcom

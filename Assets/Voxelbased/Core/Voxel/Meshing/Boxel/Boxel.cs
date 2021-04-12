@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Part of this code based on Sam Hogan tutorial
+// His original repo: https://github.com/samhogan/Minecraft-Unity3D
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
