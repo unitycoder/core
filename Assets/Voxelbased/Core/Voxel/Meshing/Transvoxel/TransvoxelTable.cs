@@ -24,15 +24,13 @@
 // given above. References to sections and figures below pertain to that paper.
 //
 //================================================================================
-
-
-/// <summary>
-/// Contains the Lengyel Transvoxel Lookup Tables
-/// </summary>
-/// 
-
+ 
 namespace VoxelbasedCom
 {
+    /// <summary>
+    /// Contains the Lengyel Transvoxel Lookup Tables
+    /// </summary>
+    ///
     public static class TransvoxelTable
     {
         public struct RegularCell

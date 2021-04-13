@@ -30,10 +30,11 @@ namespace VoxelbasedCom
 		public override MeshData GenerateMeshData()
 		{
 			vertices = new List<Vector3>();
-			 normals = new List<Vector3>();
+			normals = new List<Vector3>();
 			triangles = new List<int>();
+            float[,,] voxels = CalculateDensities();
 
-            Polygonize();
+            Polygonize(voxels);
 
             normals = NormalSolver.RecalculateNormals(triangles, vertices, 0);
 
@@ -45,13 +46,10 @@ namespace VoxelbasedCom
 			};
 		}
 
-        private void Polygonize()
+        private float[,,] CalculateDensities()
         {
-            vcase = 0;
-            Vector3Int index;
 
-            int[] density = new int[8];
-            Vector3[] cornerNormals = new Vector3[8];
+            var voxels = new float[chunkSize, chunkSize, chunkSize];
 
             for (int x = 0; x < chunkSize; x++)
             {
@@ -59,23 +57,45 @@ namespace VoxelbasedCom
                 {
                     for (int z = 0; z < chunkSize; z++)
                     {
-                        for (int i = 0; i < density.Length; i++)
+                        Vector3 pos = new Vector3(x, y, z);
+                        pos += offset;
+                        float density = GetDensity(pos.x, pos.y, pos.z);
+                        voxels[x, y, z] = density;
+                    }
+                }
+            }
+
+            return voxels;
+        }
+
+        private void Polygonize(float[,,] voxels)
+        {
+            vcase = 0;
+            Vector3Int index;
+
+            int[] density = new int[8];
+            Vector3[] cornerNormals = new Vector3[8];
+
+            for (int x = 0; x < chunkSize - 1; x++)
+            {
+                for (int y = 0; y < chunkSize - 1; y++)
+                {
+                    for (int z = 0; z < chunkSize - 1; z++)
+                    {
+                        for (int i = 0; i < 8; i++)
                         {
                             index = cornerIndex[i];
-                            Vector3 pos = new Vector3(x + index.x, y + index.y, z + index.z);
-                            pos += offset;
-
-                            density[i] = (int)(GetDensity(pos.x, pos.y, pos.z));
+                            density[i] = (int)voxels[x + index.x, y + index.y, z + index.z];
                         }
 
                         int caseCode = ((density[0] >> 7 & 1)
-                                        | (density[1] >> 6 & 2)
-                                        | (density[2] >> 5 & 4)
-                                        | (density[3] >> 4 & 8)
-                                        | (density[4] >> 3 & 16)
-                                        | (density[5] >> 2 & 32)
-                                        | (density[6] >> 1 & 64)
-                                        | (density[7] & 128));
+                                      | (density[1] >> 6 & 2)
+                                      | (density[2] >> 5 & 4)
+                                      | (density[3] >> 4 & 8)
+                                      | (density[4] >> 3 & 16)
+                                      | (density[5] >> 2 & 32)
+                                      | (density[6] >> 1 & 64)
+                                      | (density[7] & 128));
 
                         if ((caseCode ^ ((density[7] >> 7) & 255)) == 0)
                         {
@@ -86,9 +106,9 @@ namespace VoxelbasedCom
                         {
                             index = cornerIndex[i];
                             cornerNormals[i] = new Vector3(
-                                GetDensity(x + index.x + 1, y + index.y, z + index.z) - GetDensity(x + index.x - 1, y + index.y, z + index.z),
-                                GetDensity(x + index.x, y + index.y + 1, z + index.z) - GetDensity(x + index.x, y + index.y - 1, z + index.z),
-                                GetDensity(x + index.x, y + index.y, z + index.z + 1) - GetDensity(x + index.x, y + index.y, z + index.z - 1)
+                                GetCell(x + index.x + 1, y + index.y, z + index.z) - GetCell(x + index.x - 1, y + index.y, z + index.z),
+                                GetCell(x + index.x, y + index.y + 1, z + index.z) - GetCell(x + index.x, y + index.y - 1, z + index.z),
+                                GetCell(x + index.x, y + index.y, z + index.z + 1) - GetCell(x + index.x, y + index.y, z + index.z - 1)
                             );
                         }
 
@@ -166,5 +186,53 @@ namespace VoxelbasedCom
            new byte[] { 0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6 },
            new byte[] { 0, 4, 5, 0, 3, 4, 0, 1, 3, 1, 2, 3, 6, 7, 8 }
         };
+
+        public sbyte GetCell(int x, int y, int z)
+        {
+            if (x >= 0 && x < chunkSize && y >= 0 && y < chunkSize && z >= 0 && z < chunkSize)
+            {
+                return 0; //cells[x + (y * chunkSize) + (z * chunkSize * chunkSize)];
+            }
+            else
+            {
+                return GetNeighborCell(x, y, z);
+            }
+        }
+
+        private sbyte GetNeighborCell(int x, int y, int z)
+        {
+            return 0;
+            //int cx = posX;
+            //int cz = posZ;
+            //y = y < chunkHeight - 1 ? y : chunkHeight - 1;
+            //y = y > 0 ? y : 0;
+
+            //if (x >= chunkSize)
+            //{
+            //    cx = (byte)(cx >= world.worldSize - 1 ? world.worldSize - 1 : cx + 1);
+            //    x = 0;
+            //}
+
+            //if (z >= chunkSize)
+            //{
+            //    cz = (byte)(cz >= world.worldSize - 1 ? world.worldSize - 1 : cz + 1);
+            //    z = 0;
+            //}
+
+            //if (x < 0)
+            //{
+            //    cx = (byte)(cx <= 0 ? 0 : cx - 1);
+            //    x = chunkSize - 1;
+            //}
+
+            //if (z < 0)
+            //{
+            //    cz = (byte)(cz <= 0 ? 0 : cz - 1);
+            //    z = chunkSize - 1;
+            //}
+
+            //Chunk chunk = world.chunks[cx + cz * world.worldSize];
+            //return chunk.GetCell(x, y, z);
+        }
     }
 }
