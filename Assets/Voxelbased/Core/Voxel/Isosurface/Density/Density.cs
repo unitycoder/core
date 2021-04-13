@@ -20,7 +20,7 @@ namespace VoxelbasedCom
     public enum OperationType
     {
         Union,
-        Difference,
+        Subtraction,
         Intersection
     }
 }

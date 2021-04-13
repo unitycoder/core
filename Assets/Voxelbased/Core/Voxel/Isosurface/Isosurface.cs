@@ -27,7 +27,8 @@ namespace VoxelbasedCom
         public virtual float GetDensity(float x, float y, float z)
         {
             float baseDensity = density.GetDensity(x, y, z);
-            //Modify the density
+
+            /// Modify the density
             foreach (BaseModification modification in modifiers.Values)
             {
                 Density shapeDensity = shapeSelector.GetShapeDensity(modification.shapeType, modification.position, modification.shapeSize);
@@ -39,7 +40,7 @@ namespace VoxelbasedCom
                     case OperationType.Union:
                         baseDensity = Mathf.Min(baseDensity, modificationDensity);
                         break;
-                    case OperationType.Difference:
+                    case OperationType.Subtraction:
                         baseDensity = Mathf.Max(baseDensity, -modificationDensity);
                         break;
                     case OperationType.Intersection:
@@ -58,6 +59,8 @@ namespace VoxelbasedCom
                     return new Boxel(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.MarchingCubes:
                     return new MarchingCubes(this, offset, chunkSize);
+                case IsosurfaceAlgorithm.Transvoxel:
+                    return new Transvoxel(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.MarchingTetrahedra:
                     return new MarchingTetrahedra(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.NaiveSurfaceNets:
@@ -79,6 +82,7 @@ namespace VoxelbasedCom
     {
         Boxel,
         MarchingCubes,
+        Transvoxel,
         MarchingTetrahedra,
         NaiveSurfaceNets,
         DualContouring,
