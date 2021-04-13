@@ -18,7 +18,6 @@ namespace VoxelbasedCom
 		List<int> triangles;
 
         private const float s = 1f / 256f;
-        private int size = 64;
         private int vcase;
 
         //public readonly Vector2[] uvOffset = new Vector2[4] { new Vector2(0f, 0f), new Vector2(offset, 0f), new Vector2(0f, offset), new Vector2(offset, offset) };
@@ -31,12 +30,14 @@ namespace VoxelbasedCom
 		public override MeshData GenerateMeshData()
 		{
 			vertices = new List<Vector3>();
-			normals = new List<Vector3>();
+			 normals = new List<Vector3>();
 			triangles = new List<int>();
 
             Polygonize();
 
-			return new MeshData
+            normals = NormalSolver.RecalculateNormals(triangles, vertices, 0);
+
+            return new MeshData
 			{
 				vertices = vertices,
 				normals = normals,
@@ -46,7 +47,6 @@ namespace VoxelbasedCom
 
         private void Polygonize()
         {
-  
             vcase = 0;
             Vector3Int index;
 
@@ -62,7 +62,10 @@ namespace VoxelbasedCom
                         for (int i = 0; i < density.Length; i++)
                         {
                             index = cornerIndex[i];
-                            density[i] = (int)(GetDensity(x + index.x, y + index.y, z + index.z));
+                            Vector3 pos = new Vector3(x + index.x, y + index.y, z + index.z);
+                            pos += offset;
+
+                            density[i] = (int)(GetDensity(pos.x, pos.y, pos.z));
                         }
 
                         int caseCode = ((density[0] >> 7 & 1)
@@ -79,13 +82,15 @@ namespace VoxelbasedCom
                             continue;
                         }
 
-                        //for (int i = 0; i < cornerNormals.Length; i++)
-                        //{
-                        //    index = cornerIndex[i];
-                        //    cornerNormals[i] = new Vector3(chunk.GetCell(x + index.x + 1, y + index.y, z + index.z) - chunk.GetCell(x + index.x - 1, y + index.y, z + index.z),
-                        //    chunk.GetCell(x + index.x, y + index.y + 1, z + index.z) - chunk.GetCell(x + index.x, y + index.y - 1, z + index.z),
-                        //    chunk.GetCell(x + index.x, y + index.y, z + index.z + 1) - chunk.GetCell(x + index.x, y + index.y, z + index.z - 1));
-                        //}
+                        for (int i = 0; i < cornerNormals.Length; i++)
+                        {
+                            index = cornerIndex[i];
+                            cornerNormals[i] = new Vector3(
+                                GetDensity(x + index.x + 1, y + index.y, z + index.z) - GetDensity(x + index.x - 1, y + index.y, z + index.z),
+                                GetDensity(x + index.x, y + index.y + 1, z + index.z) - GetDensity(x + index.x, y + index.y - 1, z + index.z),
+                                GetDensity(x + index.x, y + index.y, z + index.z + 1) - GetDensity(x + index.x, y + index.y, z + index.z - 1)
+                            );
+                        }
 
                         byte cellClass = TransvoxelTable.RegularCellClass[caseCode];
                         ushort[] vertexLocations = TransvoxelTable.RegularVertexData[caseCode];
