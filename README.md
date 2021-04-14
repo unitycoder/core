@@ -41,20 +41,20 @@ Join the conversation and help the community.
 [Source code][sourceMarchingTetrahedra]
  
 **lonelyProgrammerWeeb**, **Fobri** and **PatrikHoller** to created the core of this project
- 
-## :green_book: Usage
-<ol>
-    <li>Unity Engine version: 2020.3.2f1</li>
-    <li>
-        Packages:
-        <ul>
-        <li>using Unity.Collections</li>
-        <li>using Unity.Jobs</li>
-        <li>using Unity.Burst</li>
-        <li>using Unity.Mathematics</li>
-        </ul>
-    </li>
-</ol>
+
+## :green_book: Documentation
+
+Check out the Getting Started page for a quick overview.
+
+The documentation is divided into several sections:
+
+* [Getting Started](https://github.com/voxelbased/core/wiki/Getting-Started)
+* [Check your level](https://github.com/voxelbased/core/wiki/Check-your-level)
+* [Usage](https://github.com/voxelbased/core/wiki/Usage)
+* [Algorithms](https://github.com/voxelbased/core/wiki/Algorithms)
+* [Shapes](https://github.com/voxelbased/core/wiki/Shapes)
+
+You can improve it by sending pull requests to this repository.
 
 ## :copyright: License
 
