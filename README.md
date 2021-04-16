@@ -1,14 +1,14 @@
 
-<h1 align="center">Voxel based - voxelbased.com</h1>
+<h1 align="center">Voxel-based - voxelbased.com</h1>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/voxelbased/core/master/images/voxelbased-logo.png" alt="voxelbased-logo" width="180px" height="180px"/>
   <br>
-  <i>Voxel based is a voxel algorithm implementations for Unity Engine.</i>
+  <i>Voxel-based is a voxel algorithm implementations for Unity Engine.</i>
   <br>
 </p>
 
-## :heavy_check_mark: Voxel based contain the next isosurface algorithms:
+## :heavy_check_mark: Voxel-based contain the next isosurface algorithms
 - Boxel
 - Marching Cubes
 - Marching Tetrahedra
@@ -16,7 +16,7 @@
 - Dual Contouring of Hermite Data
 - Cubical Marching Squares
 
-![Voxel based preview](https://raw.githubusercontent.com/voxelbased/core/master/images/preview.gif)
+![Voxel-based preview](https://raw.githubusercontent.com/voxelbased/core/master/images/preview.gif)
 
 ## :statue_of_liberty: Community
 
@@ -41,26 +41,26 @@ Join the conversation and help the community.
 [Source code][sourceMarchingTetrahedra]
  
 **lonelyProgrammerWeeb**, **Fobri** and **PatrikHoller** to created the core of this project
- 
-## :green_book: Usage
-<ol>
-    <li>Unity Engine version: 2020.3.2f1</li>
-    <li>
-        Packages:
-        <ul>
-        <li>using Unity.Collections</li>
-        <li>using Unity.Jobs</li>
-        <li>using Unity.Burst</li>
-        <li>using Unity.Mathematics</li>
-        </ul>
-    </li>
-</ol>
+
+## :green_book: Documentation
+
+Check out the Getting Started page for a quick overview.
+
+The documentation is divided into several sections:
+
+* [Getting Started](https://github.com/voxelbased/core/wiki/Getting-Started)
+* [Check your level](https://github.com/voxelbased/core/wiki/Check-your-level)
+* [Usage](https://github.com/voxelbased/core/wiki/Usage)
+* [Algorithms](https://github.com/voxelbased/core/wiki/Algorithms)
+* [Shapes](https://github.com/voxelbased/core/wiki/Shapes)
+
+You can improve it by sending pull requests to this repository.
 
 ## :copyright: License
 
-Voxel based is [MIT licensed](https://github.com/voxelbased/core/blob/main/LICENSE).
+Voxel-based is [MIT licensed](https://github.com/voxelbased/core/blob/main/LICENSE).
 
-**Love Voxel based? Give our repo a star :star: :arrow_up:.**
+**Love Voxel-based? Give our repo a star :star: :arrow_up:.**
 
 [discord]: https://discord.com/invite/aegudcbYhr
 [twitter]: https://twitter.com/voxelbasedcom
