@@ -8,6 +8,14 @@
   <br>
 </p>
 
+## :heavy_check_mark: Voxel based contain the next isosurface algorithms:
+- Boxel
+- Marching Cubes
+- Marching Tetrahedra
+- Naive Surface Nets
+- Dual Contouring of Hermite Data
+- Cubical Marching Squares
+
 ![Voxel based preview](https://raw.githubusercontent.com/voxelbased/core/master/images/preview.gif)
 
 ## :statue_of_liberty: Community

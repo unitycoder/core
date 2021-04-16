@@ -10,7 +10,7 @@ namespace VoxelbasedCom
 
 		private Vector3 center;
 		private float radius;
-		private Quaternion rotation = Quaternion.identity;
+		private Quaternion rotation;
 
 		public Cube(Vector3 c, float rad)
 		{

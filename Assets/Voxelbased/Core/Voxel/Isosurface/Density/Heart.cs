@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 namespace VoxelbasedCom
 {
+	/// <summary>
+	/// Heart density.
+	/// </summary>
 	public class Heart : Density
 	{
 		private Vector3 center;
@@ -27,8 +28,6 @@ namespace VoxelbasedCom
 			y *= 1.4f;
 			z *= 1.4f;
 			return Mathf.Pow(2f * x * x + y * y + 2f * z * z - 1, 3) - 0.1f * z * z * y * y * y - y * y * y * x * x;
-			//return Mathf.Pow(2.0f * Mathf.Pow(x, 2) + 2.0f * Mathf.Pow(y, 2) + Mathf.Pow(z, 2) - 1.0f, 3) - 0.1f * Mathf.Pow(x,2) * Mathf.Pow(y, 3) - Mathf.Pow(z, 2) * Mathf.Pow(y, 3);
-
 		}
 	}
 }
