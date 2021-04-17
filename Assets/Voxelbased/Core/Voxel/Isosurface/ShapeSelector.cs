@@ -12,6 +12,7 @@ namespace VoxelbasedCom
         public Density GetShapeDensity(Shape shapeType, Vector3 centerPoint, float radius)
         {
             Density density;
+            float padding = 2f;
 
             switch (shapeType)
             {
@@ -19,49 +20,49 @@ namespace VoxelbasedCom
                     density = new None();
                     break;
                 case Shape.Sphere:
-                    density = new Sphere(centerPoint, radius);
+                    density = new Sphere(centerPoint, radius - padding);
                     break;
                 case Shape.Cube:
-                    density = new Cube(centerPoint, radius);
+                    density = new Cube(centerPoint, radius - padding);
                     break;
                 case Shape.Cylinder:
-                    density = new Cylinder(centerPoint, radius);
+                    density = new Cylinder(centerPoint, radius - padding);
                     break;
                 case Shape.Capsule:
-                    density = new Capsule(centerPoint, radius);
+                    density = new Capsule(centerPoint, radius - padding);
                     break;
                 case Shape.Cone:
-                    density = new Cone(centerPoint, radius);
+                    density = new Cone(centerPoint, radius - padding);
                     break;
                 case Shape.Torus:
-                    density = new Torus(centerPoint, radius);
+                    density = new Torus(centerPoint, radius - padding);
                     break;
                 case Shape.Wedge:
-                    density = new Wedge(centerPoint, radius);
+                    density = new Wedge(centerPoint, radius - padding);
                     break;
                 case Shape.TriangularPrism:
-                    density = new TriangularPrism(centerPoint, radius);
+                    density = new TriangularPrism(centerPoint, radius - padding);
                     break;
                 case Shape.Heart:
-                    density = new Heart(centerPoint, radius);
+                    density = new Heart(centerPoint, radius - padding);
                     break;
                 case Shape.Pyramid:
-                    density = new Pyramid(centerPoint, radius);
+                    density = new Pyramid(centerPoint, radius - padding);
                     break;
                 case Shape.Octahedron:
-                    density = new Octahedron(centerPoint, radius);
+                    density = new Octahedron(centerPoint, radius - padding);
                     break;
                 case Shape.GoursatsSurface:
-                    density = new GoursatsSurface(centerPoint, radius);
+                    density = new GoursatsSurface(centerPoint, radius - padding);
                     break;
                 case Shape.Plane:
-                    density = new Plane(centerPoint, radius);
+                    density = new Plane(centerPoint, radius - padding);
                     break;
                 case Shape.Planet:
-                    density = new Planet(centerPoint, radius);
+                    density = new Planet(centerPoint, radius - padding);
                     break;
                 default:
-                    density = new Sphere(centerPoint, radius);
+                    density = new Sphere(centerPoint, radius - padding);
                     break;
             }
             return density;
