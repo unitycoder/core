@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace VoxelbasedCom
 {
+	/// <summary>
+	/// Torus density.
+	/// </summary>
 	public class Torus : Density
 	{
 		private Vector3 center;
@@ -20,9 +24,7 @@ namespace VoxelbasedCom
 			y -= center.y;
 			z -= center.z;
 
-			float sqr_dist = Mathf.Pow(radius - Mathf.Sqrt(Mathf.Pow(x, 2.0f) + Mathf.Pow(y, 2.0f)), 2) + Mathf.Pow(z, 2.0f) - 2.0f * radius;
-
-			return sqr_dist;
+			return Mathf.Pow(radius * 0.5f - Mathf.Sqrt(Mathf.Pow(x, 2.0f) + Mathf.Pow(y, 2.0f)), 2) + Mathf.Pow(z, 2.0f) - radius;
 		}
 	}
 }

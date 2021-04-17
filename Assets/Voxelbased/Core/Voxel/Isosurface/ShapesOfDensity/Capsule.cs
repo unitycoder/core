@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace VoxelbasedCom
 {
+	/// <summary>
+	/// Capsule density.
+	/// </summary>
 	public class Capsule : Density
 	{
 		private Vector3 center;

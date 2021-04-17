@@ -19,16 +19,28 @@ namespace VoxelbasedCom
                     density = new None();
                     break;
                 case Shape.Sphere:
-                    density = new Sphere(centerPoint, radius - 1f);
+                    density = new Sphere(centerPoint, radius);
                     break;
                 case Shape.Cube:
-                    density = new Cube(centerPoint, radius - 1f, Quaternion.identity);
+                    density = new Cube(centerPoint, radius);
+                    break;
+                case Shape.Cylinder:
+                    density = new Cylinder(centerPoint, radius);
                     break;
                 case Shape.Capsule:
                     density = new Capsule(centerPoint, radius);
                     break;
+                case Shape.Cone:
+                    density = new Cone(centerPoint, radius);
+                    break;
                 case Shape.Torus:
-                    density = new Torus(centerPoint, radius - 5f);
+                    density = new Torus(centerPoint, radius);
+                    break;
+                case Shape.Wedge:
+                    density = new Wedge(centerPoint, radius);
+                    break;
+                case Shape.TriangularPrism:
+                    density = new TriangularPrism(centerPoint, radius);
                     break;
                 case Shape.Heart:
                     density = new Heart(centerPoint, radius);
@@ -36,8 +48,8 @@ namespace VoxelbasedCom
                 case Shape.Pyramid:
                     density = new Pyramid(centerPoint, radius);
                     break;
-                case Shape.Rubin:
-                    density = new Rubin(centerPoint, radius);
+                case Shape.Octahedron:
+                    density = new Octahedron(centerPoint, radius);
                     break;
                 case Shape.GoursatsSurface:
                     density = new GoursatsSurface(centerPoint, radius);
@@ -46,10 +58,10 @@ namespace VoxelbasedCom
                     density = new Plane(centerPoint, radius);
                     break;
                 case Shape.Planet:
-                    density = new Planet(centerPoint, radius - 5f);
+                    density = new Planet(centerPoint, radius);
                     break;
                 default:
-                    density = new Rubin(centerPoint, radius);
+                    density = new Sphere(centerPoint, radius);
                     break;
             }
             return density;
@@ -61,11 +73,15 @@ namespace VoxelbasedCom
         None,
         Sphere,
         Cube,
+        Cylinder,
         Capsule,
+        Cone,
         Torus,
+        Wedge,
+        TriangularPrism,
         Heart,
         Pyramid,
-        Rubin,
+        Octahedron,
         GoursatsSurface,
         Plane,
         Planet
