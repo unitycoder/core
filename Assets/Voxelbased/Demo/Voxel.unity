@@ -366,6 +366,7 @@ MonoBehaviour:
   chunkSize: 16
   isosurfaceAlgorithm: 1
   shape: 4
+  graph: {fileID: 11400000, guid: 160399142f4b74b37aed894889978159, type: 2}
   drawGizmo: 1
 --- !u!4 &1153055731
 Transform:

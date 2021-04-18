@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace VoxelbasedCom
 {
 	/// <summary>
@@ -21,12 +24,13 @@ namespace VoxelbasedCom
 			y -= center.y;
 			z -= center.z;
 
-			y = y / (radius - 0.0f);
-			x = x / (radius - 0.0f);
-			z = z / (radius - 0.0f);
+			y = y / radius;
+			x = x / radius;
+			z = z / radius;
 
 			y *= 1.4f;
 			z *= 1.4f;
+
 			return Mathf.Pow(2f * x * x + y * y + 2f * z * z - 1, 3) - 0.1f * z * z * y * y * y - y * y * y * x * x;
 		}
 	}

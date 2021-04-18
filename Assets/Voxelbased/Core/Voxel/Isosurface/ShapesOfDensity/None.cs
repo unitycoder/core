@@ -1,4 +1,7 @@
-﻿
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace VoxelbasedCom
 {
     /// <summary>
@@ -9,11 +12,9 @@ namespace VoxelbasedCom
 		public None()
 		{
 		}
-		
 		public override float GetDensity(float x, float y, float z)
 		{
-			 
-			return 1;
+			return 1f;
 		}
 	}
 }

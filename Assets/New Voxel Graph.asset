@@ -16,18 +16,73 @@ MonoBehaviour:
   nodes:
   - id: 0
   - id: 1
-  edges: []
-  groups: []
-  stackNodes: []
-  pinnedElements: []
-  exposedParameters:
   - id: 2
   - id: 3
   - id: 4
+  edges:
+  - GUID: 8faf8078-4dc6-4494-bb3b-2852eac016ed
+    owner: {fileID: 11400000}
+    inputNodeGUID: 7b79029f-9604-48cb-9efa-83d375f0bbe9
+    outputNodeGUID: 5b543f8e-9e14-4420-ae4f-f68a462e52f2
+    inputFieldName: executed
+    outputFieldName: executes
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 0f1d01c1-e68d-4e46-96d7-8ebc5fd3cca4
+    owner: {fileID: 11400000}
+    inputNodeGUID: 0f95d81b-f0f3-4c02-ba6f-f861154c47df
+    outputNodeGUID: 316f839c-eba8-4259-8f28-85725a28f974
+    inputFieldName: inputA
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: output
+  - GUID: 277e6220-f006-4247-8a4f-b808d700b5c6
+    owner: {fileID: 11400000}
+    inputNodeGUID: 0f95d81b-f0f3-4c02-ba6f-f861154c47df
+    outputNodeGUID: 87c1be61-45d4-4219-9f98-0e26487ccb54
+    inputFieldName: inputB
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  - GUID: 0e6474e0-9b71-4934-a909-4976f15b6770
+    owner: {fileID: 11400000}
+    inputNodeGUID: 7b79029f-9604-48cb-9efa-83d375f0bbe9
+    outputNodeGUID: 0f95d81b-f0f3-4c02-ba6f-f861154c47df
+    inputFieldName: density
+    outputFieldName: output
+    inputPortIdentifier: 
+    outputPortIdentifier: 
+  groups: []
+  stackNodes: []
+  pinnedElements:
+  - position:
+      serializedVersion: 2
+      x: 18
+      y: 37
+      width: 150
+      height: 200
+    opened: 1
+    editorType:
+      serializedType: GraphProcessor.ExposedParameterView, com.alelievr.NodeGraphProcessor.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  - position:
+      serializedVersion: 2
+      x: 0
+      y: 26
+      width: 150
+      height: 200
+    opened: 0
+    editorType:
+      serializedType: GraphProcessor.ProcessorView, com.alelievr.NodeGraphProcessor.Editor,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  exposedParameters:
+  - id: 5
+  - id: 6
+  - id: 7
   serializedParameterList: []
   stickyNotes: []
-  position: {x: 0, y: 0, z: 0}
-  scale: {x: 1, y: 1, z: 1}
+  position: {x: -126.5, y: -105.5, z: 0}
+  scale: {x: 2, y: 2, z: 1}
   references:
     version: 1
     00000000:
@@ -37,10 +92,10 @@ MonoBehaviour:
         computeOrder: 0
         position:
           serializedVersion: 2
-          x: 0
-          y: 0
-          width: 100
-          height: 100
+          x: 186.19998
+          y: 29.5
+          width: 87.5
+          height: 75
         expanded: 0
         debug: 0
         nodeLock: 0
@@ -48,18 +103,67 @@ MonoBehaviour:
       type: {class: OutputNode, ns: VoxelGraph.Nodes, asm: Assembly-CSharp}
       data:
         GUID: 7b79029f-9604-48cb-9efa-83d375f0bbe9
-        computeOrder: 1
+        computeOrder: 4
         position:
           serializedVersion: 2
-          x: 100
-          y: 0
-          width: 100
-          height: 100
+          x: 424
+          y: 104.5
+          width: 169
+          height: 99
         expanded: 0
         debug: 0
         nodeLock: 0
         density: 0
     00000002:
+      type: {class: ParameterNode, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        GUID: 316f839c-eba8-4259-8f28-85725a28f974
+        computeOrder: 2
+        position:
+          serializedVersion: 2
+          x: 115.5
+          y: 131.5
+          width: 45.5
+          height: 37
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        parameterGUID: e2614596-2f8b-4abf-9cac-8f4e44bfb420
+        accessor: 0
+    00000003:
+      type: {class: FloatNode, ns: VoxelGraph.Nodes, asm: Assembly-CSharp}
+      data:
+        GUID: 87c1be61-45d4-4219-9f98-0e26487ccb54
+        computeOrder: 1
+        position:
+          serializedVersion: 2
+          x: 85
+          y: 203.5
+          width: 101
+          height: 99
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        output: 0
+        input: 2
+    00000004:
+      type: {class: SubNode, ns: VoxelGraph.Nodes, asm: Assembly-CSharp}
+      data:
+        GUID: 0f95d81b-f0f3-4c02-ba6f-f861154c47df
+        computeOrder: 3
+        position:
+          serializedVersion: 2
+          x: 260
+          y: 168.5
+          width: 99
+          height: 99
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        inputA: 0
+        inputB: 0
+        output: 0
+    00000005:
       type: {class: FloatParameter, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
         guid: 4929b55d-c7b0-48e2-aa9a-d8f3e30a7e90
@@ -71,9 +175,9 @@ MonoBehaviour:
           serializedValue: 
         input: 1
         settings:
-          id: 5
+          id: 8
         val: 0
-    00000003:
+    00000006:
       type: {class: FloatParameter, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
         guid: e2614596-2f8b-4abf-9cac-8f4e44bfb420
@@ -85,9 +189,9 @@ MonoBehaviour:
           serializedValue: 
         input: 1
         settings:
-          id: 6
+          id: 9
         val: 0
-    00000004:
+    00000007:
       type: {class: FloatParameter, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
         guid: bc38e86e-b60f-4d53-a724-65cf40b6e4d2
@@ -99,9 +203,9 @@ MonoBehaviour:
           serializedValue: 
         input: 1
         settings:
-          id: 7
+          id: 10
         val: 0
-    00000005:
+    00000008:
       type: {class: FloatParameter/FloatSettings, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
         isHidden: 0
@@ -110,7 +214,7 @@ MonoBehaviour:
         mode: 0
         min: 0
         max: 1
-    00000006:
+    00000009:
       type: {class: FloatParameter/FloatSettings, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
         isHidden: 0
@@ -119,7 +223,7 @@ MonoBehaviour:
         mode: 0
         min: 0
         max: 1
-    00000007:
+    0000000A:
       type: {class: FloatParameter/FloatSettings, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
       data:
         isHidden: 0
