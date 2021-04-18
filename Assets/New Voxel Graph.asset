@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 119fec998618442e3ba9357ab5b804ba, type: 3}
+  m_Name: New Voxel Graph
+  m_EditorClassIdentifier: 
+  serializedNodes: []
+  nodes:
+  - id: 0
+  - id: 1
+  edges: []
+  groups: []
+  stackNodes: []
+  pinnedElements: []
+  exposedParameters:
+  - id: 2
+  - id: 3
+  - id: 4
+  serializedParameterList: []
+  stickyNotes: []
+  position: {x: 0, y: 0, z: 0}
+  scale: {x: 1, y: 1, z: 1}
+  references:
+    version: 1
+    00000000:
+      type: {class: StartNode, ns: VoxelGraph.Nodes, asm: Assembly-CSharp}
+      data:
+        GUID: 5b543f8e-9e14-4420-ae4f-f68a462e52f2
+        computeOrder: 0
+        position:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 100
+          height: 100
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+    00000001:
+      type: {class: OutputNode, ns: VoxelGraph.Nodes, asm: Assembly-CSharp}
+      data:
+        GUID: 7b79029f-9604-48cb-9efa-83d375f0bbe9
+        computeOrder: 1
+        position:
+          serializedVersion: 2
+          x: 100
+          y: 0
+          width: 100
+          height: 100
+        expanded: 0
+        debug: 0
+        nodeLock: 0
+        density: 0
+    00000002:
+      type: {class: FloatParameter, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        guid: 4929b55d-c7b0-48e2-aa9a-d8f3e30a7e90
+        name: X
+        type: 
+        serializedValue:
+          serializedType: 
+          serializedName: 
+          serializedValue: 
+        input: 1
+        settings:
+          id: 5
+        val: 0
+    00000003:
+      type: {class: FloatParameter, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        guid: e2614596-2f8b-4abf-9cac-8f4e44bfb420
+        name: Y
+        type: 
+        serializedValue:
+          serializedType: 
+          serializedName: 
+          serializedValue: 
+        input: 1
+        settings:
+          id: 6
+        val: 0
+    00000004:
+      type: {class: FloatParameter, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        guid: bc38e86e-b60f-4d53-a724-65cf40b6e4d2
+        name: Z
+        type: 
+        serializedValue:
+          serializedType: 
+          serializedName: 
+          serializedValue: 
+        input: 1
+        settings:
+          id: 7
+        val: 0
+    00000005:
+      type: {class: FloatParameter/FloatSettings, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        isHidden: 0
+        expanded: 0
+        guid: 4929b55d-c7b0-48e2-aa9a-d8f3e30a7e90
+        mode: 0
+        min: 0
+        max: 1
+    00000006:
+      type: {class: FloatParameter/FloatSettings, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        isHidden: 0
+        expanded: 0
+        guid: e2614596-2f8b-4abf-9cac-8f4e44bfb420
+        mode: 0
+        min: 0
+        max: 1
+    00000007:
+      type: {class: FloatParameter/FloatSettings, ns: GraphProcessor, asm: com.alelievr.NodeGraphProcessor.Runtime}
+      data:
+        isHidden: 0
+        expanded: 0
+        guid: bc38e86e-b60f-4d53-a724-65cf40b6e4d2
+        mode: 0
+        min: 0
+        max: 1

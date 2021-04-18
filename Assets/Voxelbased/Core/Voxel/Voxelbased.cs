@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 namespace VoxelbasedCom
 {
     public class Voxelbased: MonoBehaviour
@@ -9,6 +10,7 @@ namespace VoxelbasedCom
         public int chunkSize = 16;
         public IsosurfaceAlgorithm isosurfaceAlgorithm;
         public Shape shape;
+        public VoxelGraph.VoxelGraph graph;
         public bool drawGizmo;
 
         private int radius;
@@ -25,7 +27,14 @@ namespace VoxelbasedCom
             chunksToGenerate = new Queue<Chunk>();
             shapeSelector = new ShapeSelector();
 
-            density = shapeSelector.GetShapeDensity(shape, transform.position + new Vector3(centerPoint, centerPoint, centerPoint), centerPoint);
+            if (graph == null)
+            {
+                density = shapeSelector.GetShapeDensity(shape, transform.position + new Vector3(centerPoint, centerPoint, centerPoint), centerPoint);
+            }
+            else
+            {
+                density = new VoxelGraphDensity(transform.position + new Vector3(centerPoint, centerPoint, centerPoint), graph);
+            }
         }
 
         void Start()
