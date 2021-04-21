@@ -9,7 +9,6 @@ namespace VoxelbasedCom
 	/// </summary>
 	public class Cube : Density
 	{
-
 		private Vector3 center;
 		private float radius;
 
@@ -21,11 +20,9 @@ namespace VoxelbasedCom
 
 		public override float GetDensity(float x, float y, float z)
 		{
-			Vector3 p = new Vector3(x, y, z);
-
-			float xt = p.x - center.x;
-			float yt = p.y - center.y;
-			float zt = p.z - center.z;
+			float xt = x - center.x;
+			float yt = y - center.y;
+			float zt = z - center.z;
 			
 			float xd = (xt * xt) - radius * radius;
 			float yd = (yt * yt) - radius * radius;
