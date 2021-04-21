@@ -1,5 +1,5 @@
 
-<h1 align="center">Voxel-based - voxelbased.com</h1>
+<h1 align="center">(WIP)Voxel-based - voxelbased.com</h1>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/voxelbased/core/master/images/voxelbased-logo.png" alt="voxelbased-logo" width="180px" height="180px"/>
