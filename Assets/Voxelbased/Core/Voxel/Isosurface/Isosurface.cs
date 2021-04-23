@@ -1,32 +1,99 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Collections;
+using Unity.Jobs;
+using Unity.Mathematics;
 
 namespace VoxelbasedCom
 {
-    /// <summary>
-    /// Actual class to get the density
-    /// </summary>
-    public class Isosurface
+    public class Isosurface : IDisposable
     {
         public ShapeSelector shapeSelector;
-        public Density density;
         public IsosurfaceAlgorithm isosurfaceAlgorithm;
         private Dictionary<Vector3, BaseModification> modifiers;
 
-        public Isosurface(ShapeSelector shapeSelector, Density density, IsosurfaceAlgorithm algorithm, Dictionary<Vector3, BaseModification> modifiers)
-        {
-            this.isosurfaceAlgorithm = algorithm;
-            this.density = density;
-            this.modifiers = modifiers;
-            this.shapeSelector = shapeSelector;
-        }
+        public JobHandle densityHandle;
+        public NativeArray<float> densityField;
+
+        DensityProperties baseDensity;
+
         /// <summary>
-        /// Getting the density, modified by shapes
+        /// Create a new Isosurface instance
         /// </summary>
-        public virtual float GetDensity(float x, float y, float z)
+        /// <param name="index">The iteration index</param>
+        public Isosurface(ShapeSelector shapeSelector, IsosurfaceAlgorithm algorithm, Dictionary<Vector3, BaseModification> modifiers, bool preGenerate, int chunkSize, int3 chunkPos, DensityProperties baseDensity)
         {
-            float baseDensity = density.GetDensity(x, y, z);
+            this.shapeSelector = shapeSelector;
+            this.isosurfaceAlgorithm = algorithm;
+            this.modifiers = modifiers;
+            this.baseDensity = baseDensity;
+
+            if (preGenerate)
+            {
+                int chunkSizeWithBorder = chunkSize + baseDensity.borderSize;
+                densityField = new NativeArray<float>(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, Allocator.Persistent);
+
+                var densityJob = new DensityJob()
+                {
+                    chunkOffset = chunkPos,
+                    chunkSize = chunkSizeWithBorder,
+                    densityField = densityField,
+                    shape = baseDensity.shape,
+                    shapeCenter = baseDensity.centerPoint,
+                    shapeRadius = baseDensity.shapeRadius,
+                };
+                densityHandle = densityJob.Schedule(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, 64);
+            }
+        }
+
+        public JobHandle ScheduleDensityModification(Shape shape, float3 modificationCenter, float modificationRadius, OperationType operationType, int chunkSize, int3 chunkPos)
+        {
+            if (!densityField.IsCreated) return default;
+            if (!densityHandle.IsCompleted) throw new Exception("There is a densityJob already running with the same handle!");
+
+            int chunkSizeWithBorder = chunkSize + baseDensity.borderSize;
+
+            var densityJob = new DensityJob()
+            {
+                chunkOffset = chunkPos,
+                chunkSize = chunkSizeWithBorder,
+                densityField = densityField,
+                shape = shape,
+                shapeCenter = modificationCenter,
+                shapeRadius = modificationRadius,
+                operationType = operationType
+            };
+            densityHandle = densityJob.Schedule(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, 64);
+            return densityHandle;
+        }
+
+        public JobHandle ScheduleDensityUpdate(int chunkSize, int3 chunkPos)
+        {
+            if (!densityField.IsCreated) return default;
+
+            int chunkSizeWithBorder = chunkSize + baseDensity.borderSize;
+
+            var densityJob = new DensityJob()
+            {
+                chunkOffset = chunkPos,
+                chunkSize = chunkSizeWithBorder,
+                densityField = densityField,
+                shape = baseDensity.shape,
+                shapeCenter = baseDensity.centerPoint,
+                shapeRadius = baseDensity.shapeRadius,
+                time = Time.time * 2,
+                simType = baseDensity.simulationType,
+                operationType = OperationType.Set
+            };
+            densityHandle = densityJob.Schedule(chunkSizeWithBorder * chunkSizeWithBorder * chunkSizeWithBorder, 64);
+            return densityHandle;
+        }
+
+        public virtual float GetDensity(float x, float y, float z, int chunkSize)
+        {
+            float baseDensity = densityField[CoordinateConversion.Flatten((int)x, (int)y, (int)z, chunkSize)];
+
             //Modify the density
             foreach (BaseModification modification in modifiers.Values)
             {
@@ -49,15 +116,15 @@ namespace VoxelbasedCom
             }
             return baseDensity;
         }
-        public virtual float GetDensity(Vector3 p) { return GetDensity(p.x, p.y, p.z); }
+
         public MeshBuilder GetMeshBuilder(Vector3 offset, int chunkSize)
         {
             switch (isosurfaceAlgorithm)
             {
                 case IsosurfaceAlgorithm.Boxel:
-                    return new Boxel(this, offset, chunkSize);
+                    return new Boxel.Boxel(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.MarchingCubes:
-                    return new MarchingCubes(this, offset, chunkSize);
+                    return new MarchingCubes.MarchingCubes(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.MarchingTetrahedra:
                     return new MarchingTetrahedra(this, offset, chunkSize);
                 case IsosurfaceAlgorithm.NaiveSurfaceNets:
@@ -69,6 +136,12 @@ namespace VoxelbasedCom
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public void Dispose()
+        {
+            densityHandle.Complete();
+            densityField.Dispose();
         }
     }
 
@@ -83,5 +156,14 @@ namespace VoxelbasedCom
         NaiveSurfaceNets,
         DualContouring,
         CubicalMarchingSquares
+    }
+    //Temp
+    public class DensityProperties
+    {
+        public int borderSize;
+        public Shape shape;
+        public float3 centerPoint;
+        public float shapeRadius;
+        public SimulationType simulationType;
     }
 }

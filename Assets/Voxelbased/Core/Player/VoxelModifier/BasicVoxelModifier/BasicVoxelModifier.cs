@@ -61,8 +61,9 @@ namespace VoxelbasedCom
             {
                 Chunk chunk = child.GetComponent<Chunk>();
 
-                Isosurface isosurface = new Isosurface(vb.shapeSelector, vb.density, vb.isosurfaceAlgorithm, modifyVertex);
-                chunk.CreateChunk(isosurface, vb.chunkSize);
+                //Isosurface isosurface = new Isosurface(vb.shapeSelector, vb.isosurfaceAlgorithm, modifyVertex, true, chunk.chunkSize, chunk.chunkPos, new DensityProperties());
+
+                chunk.ModifyChunk(shapeType, pos, shapeSize, operationType);
             }
 
         }

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Unity.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace VoxelbasedCom
@@ -6,11 +9,22 @@ namespace VoxelbasedCom
     /// <summary>
     /// Data for mesh creation
     /// </summary>
-    public class MeshData
+    public class MeshData : IDisposable
     {
-        public List<int> triangles;
-        public List<Vector3> vertices;
-        public List<Vector3> normals;
+        public NativeArray<int> triangles;
+        public NativeArray<float3> vertices;
+        public NativeArray<float3> normals;
+
+        public Counter counter;
+
+        public void Dispose()
+        {
+            triangles.Dispose();
+            vertices.Dispose();
+            if(normals.IsCreated)
+                normals.Dispose();
+            counter.Dispose();
+        }
     }
 
     /// <summary>
@@ -20,48 +34,6 @@ namespace VoxelbasedCom
     {
         public List<Vector3> intersectionPoints = new List<Vector3>();
         public List<Vector3> gradientVectors = new List<Vector3>();
-    }
-    /// <summary>
-    /// Hermite data structure for CMS implementation
-    /// </summary>
-    public class HermiteDataCMS
-    {
-        //The resolution that we generated this hermite data in
-        //Sample points and sample normals
-        public Dictionary<int, IntersectionSample> hermiteData;
-        //The density grid
-        public Voxel[] grid;
-        public HermiteDataCMS(int chunkSize)
-        {
-            hermiteData = new Dictionary<int, IntersectionSample>();
-            grid = new Voxel[(chunkSize+2) * (chunkSize+2) * (chunkSize+2)];
-        }
-        //Clear the hermiteData
-        public void Clear()
-        {
-            hermiteData.Clear();
-        }
-
-        //CSG operations
-        public static void Union(HermiteData other)
-        {
-
-        }
-        public static void Subtraction(HermiteData other)
-        {
-
-        }
-        public static void Intersection(HermiteData other)
-        {
-
-        }
-    }
-    /// <summary>
-    /// An intersecting sample used for the CMS implementation
-    /// </summary>
-    public struct IntersectionSample
-    {
-        public Vector3 p, n;
     }
 
     /// <summary>

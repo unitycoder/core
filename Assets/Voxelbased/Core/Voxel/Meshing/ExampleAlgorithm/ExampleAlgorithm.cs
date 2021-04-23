@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Jobs;
 using UnityEngine;
 
 namespace VoxelbasedCom
@@ -16,7 +17,7 @@ namespace VoxelbasedCom
 		{
 		}
 
-		public override MeshData GenerateMeshData()
+		/*public override bool GetMeshData(out MeshData meshData)
 		{
 			vertices = new List<Vector3>();
 			normals = new List<Vector3>();
@@ -26,16 +27,22 @@ namespace VoxelbasedCom
 			// but if we work lots of code we create another method like below:
 			CreateISOSurface();
 
-			// this will be return with calculated vertices, normals and triangles
-			return new MeshData
+			// this will be return with calculated vvertices, normals and triangles
+			meshData = new MeshData
 			{
-				vertices = vertices,
+				//vertices = vertices,
 				normals = normals,
-				triangles = triangles
+				//triangles = triangles
 			};
-		}
+            return true;
+		}*/
 
-		private void CreateISOSurface()
+        protected override JobHandle StartMeshJob(JobHandle inputDeps = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void CreateISOSurface()
         {
 			//something here calculate which point in our shape
 			// for example

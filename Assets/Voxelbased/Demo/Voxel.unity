@@ -246,9 +246,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d14fb01cfd7d4940be2a867d60eaf0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  fastSpeed: 4
-  mouseSpeed: 1
+  speed: 1
+  fastSpeed: 2
+  mouseSpeed: 4
 --- !u!1 &486270965
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,8 +365,9 @@ MonoBehaviour:
   chunkPrefab: {fileID: 2985511964130480932, guid: 456a693c501e91748878a18bc055ee80, type: 3}
   chunkSize: 16
   isosurfaceAlgorithm: 1
-  shape: 4
-  drawGizmo: 1
+  shape: 3
+  simulation: 0
+  drawGizno: 1
 --- !u!4 &1153055731
 Transform:
   m_ObjectHideFlags: 0

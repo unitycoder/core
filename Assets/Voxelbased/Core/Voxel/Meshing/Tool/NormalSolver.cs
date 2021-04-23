@@ -41,17 +41,18 @@ public static class NormalSolver
         return RecalculateNormals(triangles.ToArray(), vertices.ToArray(), angle);
     }
 
-    private static List<Vector3> RecalculateNormals(int[] triangles, Vector3[] vertices, float angle)
+    public static List<Vector3> RecalculateNormals(int[] triangles, Vector3[] vertices, float angle, int triCount = -1)
     {
-        var triNormals = new Vector3[triangles.Length / 3]; //Holds the normal of each triangle
-        var normals = new List<Vector3>(new Vector3[vertices.Length]);
+        triCount = (triCount == -1) ? triangles.Length / 3 : triCount;
+        var triNormals = new Vector3[triCount]; //Holds the normal of each triangle
+        var normals = new List<Vector3>(new Vector3[triCount * 3]);
 
         angle = angle * Mathf.Deg2Rad;
 
-        var dictionary = new Dictionary<VertexKey, VertexEntry>(vertices.Length);
+        var dictionary = new Dictionary<VertexKey, VertexEntry>(triCount * 3);
 
         //Goes through all the triangles and gathers up data to be used later
-        for (var i = 0; i < triangles.Length; i += 3)
+        for (var i = 0; i < triCount; i += 3)
         {
             int i1 = triangles[i];
             int i2 = triangles[i + 1];

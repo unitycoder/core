@@ -8,15 +8,13 @@
   <br>
 </p>
 
-## :heavy_check_mark: Voxel-based contain the next isosurface algorithms
-- Boxel
-- Marching Cubes
-- Marching Tetrahedra
-- Naive Surface Nets
-- Dual Contouring of Hermite Data
-- Cubical Marching Squares
+## Job System Branch
 
-![Voxel-based preview](https://raw.githubusercontent.com/voxelbased/core/master/images/preview.gif)
+- Currently the only working solutions on this branch are marching cubes and boxel
+- Top priority is to port other existing solutions to the Job System
+- Check Trello for more information
+
+![Voxel based preview](https://raw.githubusercontent.com/voxelbased/core/master/images/preview.gif)
 
 ## :statue_of_liberty: Community
 
