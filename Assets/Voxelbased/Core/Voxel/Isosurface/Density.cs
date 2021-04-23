@@ -57,6 +57,7 @@ namespace VoxelbasedCom
     {
         Union,
         Difference,
-        Intersection
+        Intersection,
+        Set
     }
 }

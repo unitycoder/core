@@ -81,6 +81,7 @@ namespace VoxelbasedCom
         Pyramid,
         Octahedron,
         GoursatsSurface,
+        Rubin,
         Plane,
         Planet
     }
