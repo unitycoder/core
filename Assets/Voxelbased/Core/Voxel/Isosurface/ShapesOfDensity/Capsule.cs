@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
@@ -24,12 +25,12 @@ namespace VoxelbasedCom
 			pos -= center;
 			pos = pos / (radius - 6.0f);
 
-			float3 p1 = math.float3(0, 1, 0) * (0.4f - 1.0f);
-			float3 p2 = 0.0f - math.float3(0, 1, 0) * (0.4f - 1.0f);
-			float t = math.dot((pos - p1), math.normalize(p2 - p1));
-			t = math.saturate(t);
-			float3 closestPoint = p1 + math.normalize(p2 - p1) * t;
-			return math.length(pos - closestPoint) - 1.0f;
+			float3 p1 = float3(0, 1, 0) * (0.4f - 1.0f);
+			float3 p2 = 0.0f - float3(0, 1, 0) * (0.4f - 1.0f);
+			float t = dot((pos - p1), normalize(p2 - p1));
+			t = saturate(t);
+			float3 closestPoint = p1 + normalize(p2 - p1) * t;
+			return length(pos - closestPoint) - 1.0f;
 
 		}
 	}

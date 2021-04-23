@@ -1,34 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Cylinder density.
 	/// </summary>
-	public class Cylinder : Density
+	public class Cylinder : IDensity
 	{
 		private Vector3 center;
 		private float radius;
+		private float height;
 
-		public Cylinder(Vector3 center, float rad)
+		public Cylinder(Vector3 center, float radius, float height)
 		{
 			this.center = center;
-			this.radius = rad;
+			this.radius = radius;
+			this.height = height;
 		}
 
-		public override float GetDensity(float x, float y, float z)
-		{
-			x -= center.x;
-			y -= center.y;
-			z -= center.z;
-
-			float l = new Vector2(x, z).magnitude;
-			Vector2 v = new Vector2(l, y);
-			Vector2 w = new Vector2(radius * 0.5f, radius);
-			Vector2 d = Abs(v) - w;
-			return Mathf.Min(Mathf.Max(d.x, d.y), 0.0f) + Max(d, 0.0f).magnitude;
-		}
-	}
+        public float GetDensity(float3 pos)
+        {
+			float2 d = abs(float2(length(pos.xz), pos.y)) - float2(height, radius);
+			return min(max(d.x, d.y), 0.0f) + length(max(d, 0.0f));
+        }
+    }
 }

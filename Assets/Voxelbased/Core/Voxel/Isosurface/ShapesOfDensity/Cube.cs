@@ -1,48 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Cube density.
 	/// </summary>
-	public class Cube : Density
+	public class Cube : IDensity
 	{
+		private float3 center;
+		private float3 bounds;
 
-		private Vector3 center;
-		private float radius;
-
-		public Cube(Vector3 c, float radius)
+		public Cube(float3 c, float3 bounds)
 		{
 			this.center = c;
-			this.radius = radius;
+			this.bounds = bounds;
 		}
 
-		public override float GetDensity(float x, float y, float z)
+		public float GetDensity(float3 pos)
 		{
-			Vector3 p = new Vector3(x, y, z);
-
-			float xt = p.x - center.x;
-			float yt = p.y - center.y;
-			float zt = p.z - center.z;
-			
-			float xd = (xt * xt) - radius * radius;
-			float yd = (yt * yt) - radius * radius;
-			float zd = (zt * zt) - radius * radius;
-			float d;
-			
-			if(xd > yd)
-				if(xd > zd)
-					d = xd;
-			else
-				d = zd;
-			else if(yd > zd)
-				d = yd;
-			else
-				d = zd;
-			
-			return d;
+			pos -= center;
+			float3 q = abs(pos) - bounds;
+			return length(max(q, 0.0f)) + min(max(q.x, max(q.y, q.z)), 0.0f);
 		}
     }
 }
