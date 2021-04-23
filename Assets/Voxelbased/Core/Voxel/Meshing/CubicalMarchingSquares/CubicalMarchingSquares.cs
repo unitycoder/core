@@ -234,6 +234,12 @@ namespace VoxelbasedCom
         //-----Hermite Data Generation-----\\
         #region Hermite Data Generation
 
+        private float GetDensity(float x, float y, float z) 
+        {
+            return y;
+        }
+
+
         /// <summary>
         /// Calculate the normal
         /// </summary>

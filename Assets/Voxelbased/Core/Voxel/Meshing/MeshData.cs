@@ -80,6 +80,28 @@ namespace VoxelbasedCom
     }
 
     /// <summary>
+    /// A single edge for surface reconstruction
+    /// </summary>
+    public struct Segment
+    {
+        public int face;//Which face this segment was generated on
+        public Vector3 start, end;//Start and end position    
+        public bool sharp1, sharp2;//Tells us if the first vertex is vertex made from a sharp edge, same goes for the second vertex    
+        public bool vert1, vert2;//Switch between using middleVertex1 and middleVertex2
+        public Vector3Int cell;
+    }
+
+    /// <summary>
+    /// A component, which is a loop of segments
+    /// </summary>
+    public struct Component
+    {
+        public Segment[] segments;//All the segments in this component
+        public IntersectionSample[] intersectionSamples;//Samples
+        public Vector3 vertex;//The sharp vertex that will be used in the triangle fan
+    }
+
+    /// <summary>
     /// Voxel data
     /// </summary>
     public struct Voxel
