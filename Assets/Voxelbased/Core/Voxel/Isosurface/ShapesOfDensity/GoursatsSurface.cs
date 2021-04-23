@@ -1,31 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
-	public class GoursatsSurface : Density
+	public struct GoursatsSurface : IDensity
 	{
-		private Vector3 center;
-		private float radius;
+		private float3 center;
+		private float size;
 
-		public GoursatsSurface(Vector3 center, float rad)
+		public GoursatsSurface(float3 center, float size)
 		{
 			this.center = center;
-			this.radius = rad;
+			this.size = size;
 		}
 
-		public override float GetDensity(float x, float y, float z)
-		{
-			x -= center.x;
-			y -= center.y;
-			z -= center.z;
-
-			y /= radius - 4.5f;
-			x /= radius - 4.5f;
-			z /= radius - 4.5f;
-
-			return Mathf.Pow(x, 4) + Mathf.Pow(y, 4) + Mathf.Pow(z, 4) - 1.5f * (x * x + y * y + z * z) + 1.0f;
+        public float GetDensity(float3 pos)
+        {
+			pos -= center;
+			pos /= size - 4.5f;
+			float3 a = pow(pos, 4);
+			return a.x + a.y + a.z - 1.5f * (pos.x * pos.x + pos.y * pos.y + pos.z * pos.z) + 1.0f;
 		}
-	}
+    }
 }

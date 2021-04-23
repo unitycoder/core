@@ -1,30 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Torus density.
 	/// </summary>
-	public class Torus : Density
+	public class Torus : IDensity
 	{
-		private Vector3 center;
-		private float radius;
+		private float3 center;
+		private float2 radii;
 
-		public Torus(Vector3 center, float rad)
+		public Torus(float3 center, float radii)
 		{
 			this.center = center;
-			this.radius = rad;
+			this.radii = radii;
 		}
 
-		public override float GetDensity(float x, float y, float z)
+		public float GetDensity(float3 pos)
 		{
-			x -= center.x;
-			y -= center.y;
-			z -= center.z;
-
-			return Mathf.Pow(radius * 0.5f - Mathf.Sqrt(Mathf.Pow(x, 2.0f) + Mathf.Pow(y, 2.0f)), 2) + Mathf.Pow(z, 2.0f) - radius;
+			pos -= center;
+			float2 q = float2(length(pos.xz) - radii.x, pos.y);
+			return length(q) - radii.y;
 		}
 	}
 }

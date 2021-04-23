@@ -1,37 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Heart density.
 	/// </summary>
-	public class Heart : Density
+	public struct Heart : IDensity
 	{
-		private Vector3 center;
-		private float radius;
+		private float3 center;
+		private float size;
 
-		public Heart(Vector3 center, float radius)
+		public Heart(float3 center, float size)
 		{
 			this.center = center;
-			this.radius = radius;
+			this.size = size;
 		}
 
-		public override float GetDensity(float x, float y, float z)
+		public float GetDensity(float3 pos)
 		{
-			x -= center.x;
-			y -= center.y;
-			z -= center.z;
-
-			y = y / radius;
-			x = x / radius;
-			z = z / radius;
-
-			y *= 1.4f;
-			z *= 1.4f;
-
-			return Mathf.Pow(2f * x * x + y * y + 2f * z * z - 1, 3) - 0.1f * z * z * y * y * y - y * y * y * x * x;
+			pos -= center;
+			pos = pos / size;
+			pos.yz *= 1.4f;
+			return Mathf.Pow(2f * pos.x * pos.x + pos.y * pos.y + 2f * pos.z * pos.z - 1, 3) - 0.1f * pos.z * pos.z * pos.y * pos.y * pos.y - pos.y * pos.y * pos.y * pos.x * pos.x;
 		}
 	}
 }

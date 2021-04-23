@@ -1,34 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Planet density.
 	/// </summary>
-	public class Planet : Density
+	public struct Planet : IDensity
 	{
-		private Vector3 center;
+		private float3 center;
 		private float radius;
 
-		public Planet( Vector3 center, float radius)
+		public Planet(float3 center, float radius)
 		{
 			this.center = center;
 			this.radius = radius;
 		}
 
-		public override float GetDensity(float x, float y, float z)
+		public float GetDensity(float3 pos)
 		{
-			x -= center.x;
-			y -= center.y;
-			z -= center.z;
+			pos -= center;
 
-			float distance = x * x + y * y + z * z;
-			float radiusSqrt = Mathf.Pow(radius * 0.5f, 2);
-			float noise = PerlinNoise3D(x, y, z) * 200;
+			float len = length(pos);
+			float radiusSqrt = pow(radius * 0.5f, 2);
 
-			return distance - radiusSqrt - noise;
+			return len - radius;
 		}
 	}
 }

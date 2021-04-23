@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using static Unity.Mathematics.math;
+//https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Cone density.
 	/// </summary>
-	public class Cone : IDensity
+	public struct Cone : IDensity
 	{
 		private float3 center;
 		private float angle;
@@ -24,8 +25,7 @@ namespace VoxelbasedCom
 
         public float GetDensity(float3 pos)
         {
-			pos -= center;
-			//https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+			pos -= center;			
 			float2 c = float2(sin(angle), cos(angle));
 			float2 q = height * float2(c.x / c.y, -1.0f);
 

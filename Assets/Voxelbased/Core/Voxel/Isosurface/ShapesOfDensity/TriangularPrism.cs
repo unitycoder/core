@@ -1,32 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Triangular Prism density.
 	/// </summary>
-	public class TriangularPrism : Density
+	public class TriangularPrism : IDensity
 	{
-		private Vector3 center;
+		private float3 center;
 		private float radius;
 
-		public TriangularPrism(Vector3 center, float radius)
+		public TriangularPrism(float3 center, float radius)
 		{
 			this.center = center;
 			this.radius = radius;
 		}
 
-		public override float GetDensity(float x, float y, float z)
+		public float GetDensity(float3 pos)
 		{
-			Vector3 p = new Vector3(x,y,z);
-			p.x -= center.x;
-			p.y -= center.y;
-			p.z -= center.z;
+			pos -= center;
 
-			Vector3 q = Abs(p);
-			return Mathf.Max(q.z - radius, Mathf.Max(q.x * 0.866025f + p.y * 0.5f, -p.y) - radius * 0.5f);
+			Vector3 q = abs(pos);
+			return Mathf.Max(q.z - radius, Mathf.Max(q.x * 0.866025f + pos.y * 0.5f, -pos.y) - radius * 0.5f);
 		}
 	}
 }

@@ -236,7 +236,7 @@ namespace VoxelbasedCom
 
         private float GetDensity(float x, float y, float z) 
         {
-            return y;
+            return 
         }
 
 

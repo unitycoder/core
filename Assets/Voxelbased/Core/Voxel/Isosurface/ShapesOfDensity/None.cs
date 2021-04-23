@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+using static Unity.Mathematics.math;
+
 
 namespace VoxelbasedCom
 {
     /// <summary>
     /// It is a empty density
     /// </summary>
-	public class None : Density 
+	public struct None : IDensity 
 	{
-		public None()
-		{
-		}
-		public override float GetDensity(float x, float y, float z)
+		public float GetDensity(float3 pos)
 		{
 			return 1f;
 		}

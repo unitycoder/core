@@ -1,34 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+using static Unity.Mathematics.math;
+//https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Octahedron density.
 	/// </summary>
-	public class Octahedron : Density
+	public struct Octahedron : IDensity
 	{
-		private Vector3 center;
-		private float radius;
+		private float3 center;
+		private float size;
 
-		public Octahedron(Vector3 center, float rad)
+		public Octahedron(float3 center, float size)
 		{
 			this.center = center;
-			this.radius = rad;
+			this.size = size;
 		}
 
-		public override float GetDensity(float x, float y, float z)
+		public float GetDensity(float3 pos) 
 		{
-			Vector3 p = new Vector3(x, y, z);
-
-			p.x -= center.x;
-			p.y -= center.y;
-			p.z -= center.z;
-
-			p = Abs(p);
-
-			return (p.x + p.y + p.z - radius) * 0.57735027f;
+			pos -= center;
+			pos = abs(pos);
+			return (pos.x + pos.y + pos.z - size) * 0.57735027f;
 		}
 	}
 }

@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
+using Unity.Mathematics;
 using static Unity.Mathematics.math;
+//https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Cylinder density.
 	/// </summary>
-	public class Cylinder : IDensity
+	public struct Cylinder : IDensity
 	{
 		private Vector3 center;
 		private float radius;

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using static Unity.Mathematics.math;
+//https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Capsule density.
 	/// </summary>
-	public class Capsule : IDensity
+	public struct Capsule : IDensity
 	{
 		private float3 center;
 		private float radius;

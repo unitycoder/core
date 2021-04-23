@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using Unity.Mathematics;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
     /// <summary>
     /// Plane density.
     /// </summary>
-	public class Plane : Density {
-
+	public struct Plane : IDensity 
+	{
 		private Vector3 center;
 		private float radius;
 
@@ -16,9 +18,9 @@ namespace VoxelbasedCom
 			this.radius = radius;
 		}
 		
-		public override float GetDensity(float x, float y, float z)
+		public float GetDensity(float3 pos)
 		{
-			return y - (center.y / 2);
+			return pos.y - (center.y / 2);
 		}
 	}
 }

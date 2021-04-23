@@ -1,33 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Mathematics;
+using static Unity.Mathematics.math;
 
 namespace VoxelbasedCom
 {
 	/// <summary>
 	/// Wedge density.
 	/// </summary>
-	public class Wedge : Density
+	public class Wedge : IDensity
 	{
-		private Vector3 center;
+		private float3 center;
 		private float radius;
 
-		public Wedge(Vector3 center, float radius)
+		public Wedge(float3 center, float radius)
 		{
 			this.center = center;
 			this.radius = radius;
 		}
 
-		public override float GetDensity(float x, float y, float z)
+		public float GetDensity(float3 pos)
 		{
-			Vector3 p = new Vector3(x, y, z);
-
-			p.x -= center.x;
-			p.y -= center.y;
-			p.z -= center.z;
+			pos -= center;
 			
-			Vector3 q = Abs(p);
-			return Mathf.Max(q.z - radius, Mathf.Max(p.x + p.y, Mathf.Max(-p.x, -p.y)) - radius * 0.5f);
+			float3 q = abs(pos);
+			return max(q.z - radius, max(pos.x + pos.y, max(-pos.x, -pos.y)) - radius * 0.5f);
 		}
 	}
 }
