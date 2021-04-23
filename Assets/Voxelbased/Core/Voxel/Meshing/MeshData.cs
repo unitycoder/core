@@ -37,6 +37,49 @@ namespace VoxelbasedCom
     }
 
     /// <summary>
+    /// Hermite data structure for CMS implementation
+    /// </summary>
+    public class HermiteDataCMS
+    {
+        //The resolution that we generated this hermite data in
+        //Sample points and sample normals
+        public Dictionary<int, IntersectionSample> hermiteData;
+        //The density grid
+        public Voxel[] grid;
+        public HermiteDataCMS(int chunkSize)
+        {
+            hermiteData = new Dictionary<int, IntersectionSample>();
+            grid = new Voxel[(chunkSize + 2) * (chunkSize + 2) * (chunkSize + 2)];
+        }
+        //Clear the hermiteData
+        public void Clear()
+        {
+            hermiteData.Clear();
+        }
+
+        //CSG operations
+        public static void Union(HermiteData other)
+        {
+
+        }
+        public static void Subtraction(HermiteData other)
+        {
+
+        }
+        public static void Intersection(HermiteData other)
+        {
+
+        }
+    }
+    /// <summary>
+    /// An intersecting sample used for the CMS implementation
+    /// </summary>
+    public struct IntersectionSample
+    {
+        public Vector3 p, n;
+    }
+
+    /// <summary>
     /// Voxel data
     /// </summary>
     public struct Voxel
