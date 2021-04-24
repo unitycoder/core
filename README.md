@@ -4,11 +4,11 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/voxelbased/core/master/images/voxelbased-logo.png" alt="voxelbased-logo" width="180px" height="180px"/>
   <br>
-  <i>Voxel-based is a voxel algorithm implementations for Unity Engine.</i>
+  <i>Voxel-based is a collection of voxel algorithm implementations for the Unity Engine.</i>
   <br>
 </p>
 
-## :heavy_check_mark: Voxel-based contain the next isosurface algorithms
+## :heavy_check_mark: Voxel-based contains the following isosurface algorithms
 - Boxel
 - Marching Cubes
 - Marching Tetrahedra
@@ -30,7 +30,7 @@ Join the conversation and help the community.
 
 <p align="center"><a href="https://trello.com/b/PNrqXXN0/voxel-based">Follow our progress on  Trello</a></p> 
 
-## :star2: Special thanks for
+## :star2: Special thanks to
 **theSoenke** allowed us to use his code as a base for our project
 [Github][githubtheSoenkeProceduralTerrain]
 
